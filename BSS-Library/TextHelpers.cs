@@ -1,7 +1,7 @@
 ﻿using System.Configuration;
 using System.Text;
 
-namespace BankStatementScannerLibrary.TextHelpers
+namespace BankStatementScannerLibrary
 {
     public static class TextProcessor
     {
@@ -9,7 +9,7 @@ namespace BankStatementScannerLibrary.TextHelpers
         /// Month Abbreviations for the start of the string. 
         /// Including values for converting to int.
         /// </summary>
-        private static readonly IDictionary<String, Int32> months = new Dictionary<String, Int32> {
+        private static readonly IDictionary<string, int> Months = new Dictionary<string, int> {
             { "Jan", 1 },
             { "Feb", 2 },
             { "Mar", 3 },
@@ -55,11 +55,11 @@ namespace BankStatementScannerLibrary.TextHelpers
         /// </summary>
         /// <param name="raw">String array input from PDF text extraction.</param>
         /// <returns>List of DateOnly objects representing the range.</returns>
-        public static List<DateOnly> FindBillingDate(String[] raw, String key) 
+        public static List<DateOnly> FindBillingDate(string[] raw, string key) 
         {
             List<DateOnly> result = new();
 
-            String containsDate = "";
+            string containsDate = "";
 
             for (int i = 0; i < raw.Length; i++)
             {
@@ -76,19 +76,19 @@ namespace BankStatementScannerLibrary.TextHelpers
                         containsDate = raw[i + 1].Replace(',', '-').Replace(' ', '-');
                     }
                 }
-                if (!String.IsNullOrEmpty(containsDate))
+                if (!string.IsNullOrEmpty(containsDate))
                 {
                     break;
                 }
             }
 
-            String dateRange = TrimHyphens(containsDate);
-            Int32 endDateIndex = FindLastDateIndex(dateRange, out DateOnly endDate);
+            string dateRange = TrimHyphens(containsDate);
+            int endDateIndex = FindLastDateIndex(dateRange, out DateOnly endDate);
 
             if (endDateIndex != -1)
             {
-                String startDateRaw = dateRange.Remove(endDateIndex).Trim('-');
-                Int32 startDateIndex = FindLastDateIndex(startDateRaw, out DateOnly startDate);
+                string startDateRaw = dateRange.Remove(endDateIndex).Trim('-');
+                int startDateIndex = FindLastDateIndex(startDateRaw, out DateOnly startDate);
                 if (startDateIndex >= 0)
                 {
                     result.Add(startDate);
@@ -120,13 +120,13 @@ namespace BankStatementScannerLibrary.TextHelpers
         /// </summary>
         /// <param name="str">String containg Month.</param>
         /// <returns>Int value of Month found in String. 0 if none are found.</returns>
-        private static Int32 GetMonth(String str)
+        private static int GetMonth(string str)
         {
-            foreach (string month in months.Keys)
+            foreach (string month in Months.Keys)
             {
                 if (str.Contains(month))
                 {
-                    return months[month];
+                    return Months[month];
                 }
             }
             return 0;
@@ -138,45 +138,45 @@ namespace BankStatementScannerLibrary.TextHelpers
         /// <param name="transactions">List of strings containing dates to be converted.</param>
         /// <param name="dateRange">Date range for the transactions. Used to add year.</param>
         /// <returns>List of Strings representing Transactions</returns>
-        public static List<String> ConvertDateFormat(List<String> transactions, List<DateOnly> dateRange, String oldDateFormat) 
+        public static List<string> ConvertDateFormat(List<string> transactions, List<DateOnly> dateRange, string oldDateFormat) 
         {
-            String startyear = dateRange[0].Year.ToString();
-            String endyear = dateRange[1].Year.ToString();
+            string startyear = dateRange[0].Year.ToString();
+            string endyear = dateRange[1].Year.ToString();
 
             for (int i = 0; i < transactions.Count; i++)
             {
                 if (transactions[i].Length > oldDateFormat.Length)
                 {
-                    String tempFormat = oldDateFormat;
-                    String oldDate = transactions[i].Remove(oldDateFormat.Length).Trim();
-                    String remaining = transactions[i].Substring(oldDateFormat.Length).Trim(); 
+                    string tempFormat = oldDateFormat;
+                    string oldDate = transactions[i].Remove(oldDateFormat.Length).Trim();
+                    string remaining = transactions[i].Substring(oldDateFormat.Length).Trim(); 
                     if (oldDate.Length < oldDateFormat.Length)
                     {
                         tempFormat = oldDateFormat.Remove(oldDateFormat.Length - 1); 
                     }
 
-                    StringBuilder newStringSB = new();
+                    StringBuilder newStringSb = new();
 
-                    if (DateOnly.TryParseExact(oldDate, tempFormat, out DateOnly transDate)) // Parsable 
+                    if (DateOnly.TryParseExact(oldDate, tempFormat, out DateOnly transDate)) // Parseable 
                     {
-                        newStringSB.Append(transDate.ToString("MM/dd/")); // Add start of date.  
+                        newStringSb.Append(transDate.ToString("MM/dd/")); // Add start of date.  
 
                         if (startyear.Equals(endyear)) // If start date and new date have same year.
                         {
-                            newStringSB.Append(startyear + ","); // Add year 
+                            newStringSb.Append(startyear + ","); // Add year 
                         }
                         else // Not same year
                         {
                             if (dateRange[0].Month <= transDate.Month && transDate.Month <= 12) // If trans month is within start month and the end of the year.
                             {
-                                newStringSB.Append(startyear + ",");
+                                newStringSb.Append(startyear + ",");
                             }
                             else
                             {
-                                newStringSB.Append(endyear + ",");
+                                newStringSb.Append(endyear + ",");
                             }
                         }
-                        transactions[i] = newStringSB.Append(remaining).ToString();
+                        transactions[i] = newStringSb.Append(remaining).ToString();
                     }
                 }
                 else
@@ -189,35 +189,35 @@ namespace BankStatementScannerLibrary.TextHelpers
         }
 
         /// <summary>
-        /// Removes continous repeated hyphen occurances in string. 
+        /// Removes continuous repeated hyphen occurrences in string. 
         /// </summary>
         /// <param name="input">String to be trimmed</param>
         /// <returns>Trimmed String</returns>
-        private static String TrimHyphens(String input)
+        private static string TrimHyphens(string input)
         {
-            Char[] chars = input.ToCharArray();
-            StringBuilder dateRangeSB = new();
+            char[] chars = input.ToCharArray();
+            StringBuilder dateRangeSb = new();
             int maxIndex = chars.Length - 1;
-            for (Int32 i = 0; i <= maxIndex; i++)
+            for (int i = 0; i <= maxIndex; i++)
             {
                 if (chars[i] == '|')
                 {
                     break;
                 }
 
-                if (chars[i] != '-') // Problem with hypen at end of string
+                if (chars[i] != '-') // Problem with hyphen at end of string
                 {
-                    dateRangeSB.Append(chars[i]);
+                    dateRangeSb.Append(chars[i]);
                 } else
                 {
-                    dateRangeSB.Append('-');
+                    dateRangeSb.Append('-');
                     while (chars[i + 1] == '-')
                     {
                         i++;
                     }
                 }
             }
-            String result = dateRangeSB.ToString().Trim('-').Trim();
+            string result = dateRangeSb.ToString().Trim('-').Trim();
 
             return result;
         }
@@ -228,7 +228,7 @@ namespace BankStatementScannerLibrary.TextHelpers
         /// <param name="dateRange">The string containing start date and end date.</param>
         /// <param name="endDate">The last valid DateOnly instance in string.</param>
         /// <returns>Returns the starting index of date if found. -1 Otherwise.</returns>
-        private static Int32 FindLastDateIndex(String dateRange, out DateOnly endDate)
+        private static int FindLastDateIndex(string dateRange, out DateOnly endDate)
         {
             int startIndex = dateRange.Length - 11;
             if(startIndex < 0)
@@ -236,9 +236,9 @@ namespace BankStatementScannerLibrary.TextHelpers
                 return -1;
             }
 
-            for (Int32 i = startIndex; i >= 0; i--)
+            for (int i = startIndex; i >= 0; i--)
             {
-                String temp = dateRange.Substring(i);
+                string temp = dateRange.Substring(i);
                 if (DateOnly.TryParseExact(temp, "MMMM-dd-yyyy", out endDate) || DateOnly.TryParseExact(temp, "MMM-dd-yyyy", out endDate))
                 {
                     return i;
@@ -253,55 +253,55 @@ namespace BankStatementScannerLibrary.TextHelpers
         /// </summary>
         /// <param name="str">String containing a transaction with date, description, and amount.</param>
         /// <returns>Returns the transaction with a comma placed before amount and dollar sign if needed.</returns>
-        public static String FormatAmount(String str)
+        public static string FormatAmount(string str)
         {
-            StringBuilder resultSB = new StringBuilder();
-            for (Int32 i = str.Length - 1; i > 1; i--)
+            StringBuilder resultSb = new();
+            for (int i = str.Length - 1; i > 1; i--)
             {
-                if (48 <= (Int32)str[i] && (Int32)str[i] <= 57) // If number
+                if (48 <= (int)str[i] && (int)str[i] <= 57) // If number
                 {
                     if (str[i - 1].Equals('-')) // Minus sign next char
                     {
-                        resultSB.Insert(0, str.Substring(0, i).Trim('-').Trim() + ",-$" + str[i]); // Add dollar sign and minus
-                        return resultSB.ToString();
+                        resultSb.Insert(0, str[..i].Trim('-').Trim() + ",-$" + str[i]); // Add dollar sign and minus
+                        return resultSb.ToString();
                     }
                     else if (str[i - 1].Equals(' ')) // Space next char
                     {
                         if (!str[i - 2].Equals('-')) // No minus found
                         {
-                            resultSB.Insert(0, str.Substring(0, i).Trim() + ",$" + str[i]);
+                            resultSb.Insert(0, str[..i].Trim() + ",$" + str[i]);
                         }
                         else // Minus found
                         {
-                            resultSB.Insert(0, str.Substring(0, i - 1).Trim('-').Trim() + ",-$" + str[i]);
+                            resultSb.Insert(0, str[..(i - 1)].Trim('-').Trim() + ",-$" + str[i]);
                         }
-                        return resultSB.ToString();
+                        return resultSb.ToString();
                     }
                     else // Number current, not end of amount.
                     {
-                        resultSB.Insert(0, str[i]);
+                        resultSb.Insert(0, str[i]);
                     }
                 }
                 else if (str[i].Equals('$')) // If dollar sign
                 {
                     if (!str[i - 1].Equals('-') && !str[i - 2].Equals('-')) // No minus sign for next two chars
                     {
-                        resultSB.Insert(0, str.Substring(0, i).Trim() + ",$"); // Add comma
-                        return resultSB.ToString();
+                        resultSb.Insert(0, str[..i].Trim() + ",$"); // Add comma
+                        return resultSb.ToString();
 
                     }
                     else if (str[i - 1].Equals('-') || str[i - 2].Equals('-')) // At least one minus sign found in next two chars
                     {
-                        resultSB.Insert(0, str.Substring(0, i - 1).Trim('-').Trim() + ",-$"); // Add comma and minus sign
-                        return resultSB.ToString();
+                        resultSb.Insert(0, str[..(i - 1)].Trim('-').Trim() + ",-$"); // Add comma and minus sign
+                        return resultSb.ToString();
                     }
                 }
                 else if (!str[i].Equals('-')) //Do not add Minus sign
                 {
-                    resultSB.Insert(0, str[i]);
+                    resultSb.Insert(0, str[i]);
                 }
             }
-            return resultSB.ToString();
+            return resultSb.ToString();
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace BankStatementScannerLibrary.TextHelpers
         /// </summary>
         /// <param name="Transactions">List of transaction strings.</param>
         /// <returns>Sorted list of strings by date at start of each string.</returns>
-        public static int DateComparable(String str1, String str2) 
+        public static int DateComparable(string str1, string str2) 
         {
             if (str1.Length < 10 || !DateOnly.TryParse(str1.Remove(10), out DateOnly str1date)) str1date = DateOnly.MinValue;
             if (str2.Length < 10 || !DateOnly.TryParse(str2.Remove(10), out DateOnly str2date)) str2date = DateOnly.MinValue;
@@ -342,10 +342,10 @@ namespace BankStatementScannerLibrary.TextHelpers
         /// </summary>
         /// <param name="input">Transaction string</param>
         /// <returns>Index of comma</returns>
-        public static Int32 SecondCommaIndex(string input)
+        public static int SecondCommaIndex(string input)
         {
-            Int16 commaCount = 0;
-            for (Int32 i = 0; i < input.Length; i++)
+            short commaCount = 0;
+            for (int i = 0; i < input.Length; i++)
             {
                 if (input[i].Equals(','))
                 {
@@ -367,11 +367,11 @@ namespace BankStatementScannerLibrary.TextHelpers
         /// <param name="stoppingConditions">String indicating when to stop capturing</param>
         /// <param name="exclusions">Strings to be excluded during the capture</param>
         /// <returns></returns>
-        public static List<String> GetTransactionData(String[] raw, String[] startingConditions, String[] stoppingConditions, params String[] exclusions) 
+        public static List<string> GetTransactionData(string[] raw, string[] startingConditions, string[] stoppingConditions, params string[] exclusions) 
         {
-            List<String> transactionData = new List<String>();
-            Boolean capturing = false;
-            foreach (String line in raw)
+            List<string> transactionData = new();
+            bool capturing = false;
+            foreach (string line in raw)
             {
                 if (startingConditions.Any(condition => line.Contains(condition)))
                 {
@@ -381,7 +381,7 @@ namespace BankStatementScannerLibrary.TextHelpers
                 {
                     capturing = false;
                 }
-                if (capturing && !String.IsNullOrEmpty(line) && !IsException(line, exclusions))
+                if (capturing && !string.IsNullOrEmpty(line) && !IsException(line, exclusions))
                 {
                     transactionData.Add(line);
                 }
@@ -400,7 +400,7 @@ namespace BankStatementScannerLibrary.TextHelpers
         /// <returns></returns>
         private static bool IsException(string line, string[] exclusions)
         {
-            return exclusions?.Any(excluded => line.Contains(excluded)) ?? false;
+            return exclusions?.Any(line.Contains) ?? false;
         }
 
         /// <summary>
@@ -411,9 +411,9 @@ namespace BankStatementScannerLibrary.TextHelpers
         /// <param name="decreasing"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public static String RemoveUntilSpace(String str, int startIndex, bool deleteSpace = false, bool decreasing = false)
+        public static string RemoveUntilSpace(string str, int startIndex, bool deleteSpace = false, bool decreasing = false)
         {
-            Char[] chars = str.ToCharArray();
+            char[] chars = str.ToCharArray();
             int maxIndex = str.Length - 1;
             int count = 1;
             
@@ -454,17 +454,9 @@ namespace BankStatementScannerLibrary.TextHelpers
             {
                 count++;
                 current--;
-            } 
-
-            String result;
-            if (!decreasing)
-            {
-                result = str.Remove(startIndex, count);
-            } else
-            {
-                result = str.Remove(current + 1, count);
             }
 
+            string result = !decreasing ? str.Remove(startIndex, count) : str.Remove(current + 1, count);
             return result;
         }
     }

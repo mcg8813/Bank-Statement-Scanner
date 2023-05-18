@@ -1,9 +1,5 @@
-﻿using System.Configuration;
-using System.Text;
+﻿using System.Text;
 using System.Text.RegularExpressions;
-using System.Globalization;
-using BankStatementScannerLibrary.TextHelpers;
-using System.Transactions;
 
 
 namespace BankStatementScannerLibrary.Processors
@@ -16,12 +12,12 @@ namespace BankStatementScannerLibrary.Processors
         /// </summary>
         /// <param name="raw">String array input from PDF text extraction.</param>
         /// <returns>Formatted string</returns>
-        public String ProcessPDFString(String[] raw)
+        public string ProcessPdfString(string[] raw)
         {
-            String[] startConditions = { "Date Description Amount" };
-            String[] stopConditions = { "Fees\r" };
-            String[] exceptions = { "Billing Cycle" };
-            List<String> transactions = TextProcessor.GetTransactionData(raw, startConditions, stopConditions, exceptions);
+            string[] startConditions = { "Date Description Amount" };
+            string[] stopConditions = { "Fees\r" };
+            string[] exceptions = { "Billing Cycle" };
+            List<string> transactions = TextProcessor.GetTransactionData(raw, startConditions, stopConditions, exceptions);
 
             List<DateOnly> dateRange = TextProcessor.FindBillingDate(raw, "days in Billing Cycle");
             if (dateRange.Count == 0)
@@ -50,37 +46,30 @@ namespace BankStatementScannerLibrary.Processors
                 default:
                     break;
             }
-            return "Capital One format not recongized";
+            return "Capital One format not recognized";
         }
 
         /// <summary>
         /// Determines the format of a Capital One Bank Statement.
         /// </summary>
-        /// <param name="raw">String array input from PDF text extraction.</param>
+        /// <param name="transactions">String array input from PDF text extraction.</param>
         /// <returns></returns>
-        private static Int32 GetCapitalFormat(List<String> transactions)
+        private static int GetCapitalFormat(List<string> transactions)
         {
-            foreach (string str in transactions)
-            {
-                if (str.Contains("Trans Date Post Date"))
-                {
-                    return 2;
-                }
-            }
-            return 1;
+            return transactions.Any(str => str.Contains("Trans Date Post Date")) ? 2 : 1;
         }
 
 
         /// <summary>
         /// Processes the first format of capital one transaction data.
         /// </summary>
-        /// <param name="transactions">List of strings respresenting transaction data.</param>
+        /// <param name="transactions">List of strings representing transaction data.</param>
         /// <param name="dateRange">Date Range of the transactions.</param>
         /// <returns>Output string.</returns>
-        private String ParseFirstFormat(List<String> transactions, List<DateOnly> dateRange)
+        private static string ParseFirstFormat(List<string> transactions, List<DateOnly> dateRange)
         {
-            Boolean Header = false;
-            StringBuilder sb = new StringBuilder();
+            bool header = false;
+            StringBuilder sb = new();
             transactions.Sort(TextProcessor.DateComparable);
 
             for (int i = 0; i < transactions.Count; i++)
@@ -93,43 +82,43 @@ namespace BankStatementScannerLibrary.Processors
                         transactions.RemoveAt(i + 1);
                     }
 
-                    String newString = TextProcessor.FormatAmount(transactions[i]);
+                    string newString = TextProcessor.FormatAmount(transactions[i]);
 
                     //Add to result.
                     if (Regex.Matches(newString, @",").Count >= 2 && Regex.Matches(newString, @"$").Count > 0)
                     {
                         sb.Append(newString + '\n');
                     }
-                } //Table Header/Seperator. 
-                else if (transactions[i].Contains("Date Description Amount") && !Header)
+                } //Table Header/Separator. 
+                else if (transactions[i].Contains("Date Description Amount") && !header)
                 {
                     sb.Append("Date,Description,Amount\n");
-                    Header = true;
+                    header = true;
                 }
             }
 
-            String result = sb.ToString();
+            string result = sb.ToString();
             return result;
         }
 
         /// <summary>
         /// Processes the second format of capital one transaction data.
         /// </summary>
-        /// <param name="transactions">List of strings respresenting transaction data.</param>
+        /// <param name="transactions">List of strings representing transaction data.</param>
         /// <param name="dateRange">Date Range of the transactions.</param>
         /// <returns>Output string.</returns>
-        private static String ParseSecondFormat(List<String> transactions, List<DateOnly> dateRange) 
+        private static string ParseSecondFormat(List<string> transactions, List<DateOnly> dateRange) 
         {
-            Boolean header = false;
-            StringBuilder sb = new StringBuilder();
+            bool header = false;
+            StringBuilder sb = new();
             transactions.Sort(TextProcessor.DateComparable);
 
             for (int i = 0; i < transactions.Count; i++)
             {
                 if (transactions[i].Length > 15 && DateOnly.TryParseExact(transactions[i].Remove(10), "MM/dd/yyyy", out DateOnly tempDate))
                 {
-                    String newString = TextProcessor.FormatAmount(transactions[i]);
-                    Int32 commaIndex = TextProcessor.SecondCommaIndex(newString);
+                    string newString = TextProcessor.FormatAmount(transactions[i]);
+                    int commaIndex = TextProcessor.SecondCommaIndex(newString);
 
                     if (commaIndex != 0 && newString.Length > 17)
                     {
@@ -147,7 +136,7 @@ namespace BankStatementScannerLibrary.Processors
                     {
                         sb.Append(newString + '\n');
                     }
-                } //Table Header/Seperator. 
+                } //Table Header/Separator. 
                 else if (transactions[i].Contains("Trans Date Post Date Description Amount") && !header)
                 {
                     sb.Append("Date,Description,Amount\n");
@@ -155,7 +144,7 @@ namespace BankStatementScannerLibrary.Processors
                 }
             }
 
-            String result = sb.ToString();
+            string result = sb.ToString();
             return result;
         }
     }

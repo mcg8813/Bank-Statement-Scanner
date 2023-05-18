@@ -2,9 +2,9 @@
 {
     public interface IProcessor
     {
-        String ProcessPDFString(string[] raw);
+        string ProcessPdfString(string[] raw);
         
-        String ParseData(List<String> transactions, List<DateOnly>? dateRange = null);
+        string ParseData(List<string> transactions, List<DateOnly>? dateRange = null);
     }
 
 }

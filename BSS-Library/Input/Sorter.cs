@@ -4,7 +4,7 @@ namespace BankStatementScannerLibrary.Input
 {
     public class Sorter
     {
-        public static String GetFormat(String[] raw)
+        public static string GetFormat(string[] raw)
         {
             IProcessor? processor = null;
 
@@ -29,7 +29,7 @@ namespace BankStatementScannerLibrary.Input
 
             if(processor != null)
             {
-                return processor.ProcessPDFString(raw);
+                return processor.ProcessPdfString(raw);
             } else
             {
                 throw new FormatNotFoundException("Unable to determine format");

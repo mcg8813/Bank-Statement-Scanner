@@ -1,18 +1,17 @@
 using BankStatementScannerLibrary.Input;
-using BankStatementScannerLibrary.Input.PDFReader;
-using BankStatementScannerLibrary.TextHelpers;
 using System.Configuration;
 using System.Data;
 using System.Text;
+using BankStatementScannerLibrary;
 
 namespace Bank_Statement_Scanner
 {
-    public partial class PDFInput : Form
+    public partial class PdfInput : Form
     {
         /// <summary>
         /// Initalizes form.
         /// </summary>
-        public PDFInput()
+        public PdfInput()
         {
             InitializeComponent();
         }
@@ -27,7 +26,7 @@ namespace Bank_Statement_Scanner
             DialogResult = UploadFileDialog.ShowDialog();
             if(DialogResult == DialogResult.OK)
             {
-                String webFilePath = "file:///" + UploadFileDialog.FileName;
+                string webFilePath = "file:///" + UploadFileDialog.FileName;
                 webView.Source = new Uri(webFilePath);
                 ExtractFormattedButton.Enabled = true;
                 ExtractRawButton.Enabled = true;
@@ -59,23 +58,24 @@ namespace Bank_Statement_Scanner
         private void ExtractFormattedButton_Click(object sender, EventArgs e) // TODO - Add tests methods
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None); 
-            String filepath = config.AppSettings.Settings["filePath"].Value;
+            string filepath = config.AppSettings.Settings["filePath"].Value;
 
-            Boolean possiblePath = filepath.IndexOfAny(Path.GetInvalidPathChars()) == -1;
+            bool possiblePath = filepath.IndexOfAny(Path.GetInvalidPathChars()) == -1;
 
-            if (possiblePath && !String.IsNullOrEmpty(filepath))
+            if (possiblePath && !string.IsNullOrEmpty(filepath))
             {
-                String filename = UploadFileDialog.SafeFileName;
-                String input = UploadFileDialog.FileName;
+                if (UploadFileDialog.SafeFileName == null) return;
+                string filename = UploadFileDialog.SafeFileName;
+                string input = UploadFileDialog.FileName;
 
                 int dotIndex = filename.IndexOf('.');
-                String name = filename.Remove(dotIndex);
+                string name = filename.Remove(dotIndex);
 
-                String outputFile = name + "Output.csv";
-                String raw = PDFReader.ExtractPDF(input);
+                string outputFile = name + "Output.csv";
+                string raw = PdfReader.ExtractPdf(input);
                 FilePathBox.Text = outputFile.FullFilePath();
-                String[] Result = raw.Split("\n");
-                String csv = Sorter.GetFormat(Result);
+                string[] result = raw.Split("\n");
+                string csv = Sorter.GetFormat(result);
 
                 File.WriteAllText(outputFile.FullFilePath(), csv);
                 BindData(outputFile.FullFilePath());
@@ -93,17 +93,8 @@ namespace Bank_Statement_Scanner
         {
             DataTable dt = new();
             string[] lines = File.ReadAllLines(filePath);
-            
-            List<String> headerLabels = new(){ "Trans Date", "Description", "Amount" };
+            List<string> headerLabels = new(){ "Trans Date", "Description", "Amount" };
 
-            foreach (string line in lines)
-            {
-                if(line.Contains("Post Date"))
-                {
-                    headerLabels.Insert(1, "Post Date");
-                    break;
-                } 
-            }
 
             if (lines.Length > 0)
             {
@@ -149,15 +140,15 @@ namespace Bank_Statement_Scanner
         private void FolderSelect_Click(object sender, EventArgs e)
         {
             DialogResult dr = SelectFolderDialog.ShowDialog();
-            String folderPath = SelectFolderDialog.SelectedPath;
-            if(dr == DialogResult.OK)
-            {
-                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                config.AppSettings.Settings["filePath"].Value = folderPath;
-                config.Save(ConfigurationSaveMode.Modified);
-                ConfigurationManager.RefreshSection("appSettings");
-                ErrorProvider.Clear();
-            }
+            string folderPath = SelectFolderDialog.SelectedPath;
+
+            if (dr != DialogResult.OK) return;
+
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.AppSettings.Settings["filePath"].Value = folderPath;
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+            ErrorProvider.Clear();
         }
 
         /// <summary>
@@ -166,14 +157,12 @@ namespace Bank_Statement_Scanner
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SaveButton_Click(object sender, EventArgs e)
-        { 
-            String filename = UploadFileDialog.SafeFileName;
-
+        {
+            if (UploadFileDialog.SafeFileName == null) return;
+            string filename = UploadFileDialog.SafeFileName;
             int dotIndex = filename.IndexOf('.');
-            String Name = filename.Remove(dotIndex);
-
-            String OutputFile = Name + "Output.csv";
-
+            string name = filename.Remove(dotIndex);
+            string outputCsv = name + "Output.csv";
             StringBuilder sb = new();
 
             var headers = CSVFileViewer.Columns.Cast<DataGridViewColumn>();
@@ -185,27 +174,26 @@ namespace Bank_Statement_Scanner
                 sb.AppendLine(string.Join(",", cells.Select(cell => "\"" + cell.Value + "\"").ToArray()));
             }
 
-            String result = sb.ToString();
-            File.WriteAllText(OutputFile.FullFilePath(), result);
+            string result = sb.ToString();
+            File.WriteAllText(outputCsv.FullFilePath(), result);
         }
 
         private void ExtractRawButton_Click(object sender, EventArgs e)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            String filepath = config.AppSettings.Settings["filePath"].Value;
+            string filepath = config.AppSettings.Settings["filePath"].Value;
 
-            Boolean possiblePath = filepath.IndexOfAny(Path.GetInvalidPathChars()) == -1;
+            bool possiblePath = filepath.IndexOfAny(Path.GetInvalidPathChars()) == -1;
 
-            if (possiblePath && !String.IsNullOrEmpty(filepath))
+            if (possiblePath && !string.IsNullOrEmpty(filepath))
             {
-                String filename = UploadFileDialog.SafeFileName;
-                String input = UploadFileDialog.FileName;
-
+                if (UploadFileDialog.SafeFileName == null) return;
+                string filename = UploadFileDialog.SafeFileName;
+                string input = UploadFileDialog.FileName;
                 int dotIndex = filename.IndexOf('.');
-                String name = filename.Remove(dotIndex);
-
-                String rawOutputFile = name + "RawOutput.csv";
-                String raw = PDFReader.ExtractPDF(input);
+                string name = filename.Remove(dotIndex);
+                string rawOutputFile = name + "RawOutput.csv";
+                string raw = PdfReader.ExtractPdf(input);
                 FilePathBox.Text = rawOutputFile.FullFilePath();
                 File.WriteAllText(rawOutputFile.FullFilePath(), raw);
                 Console.WriteLine("Extract Complete");

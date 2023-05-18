@@ -1,12 +1,12 @@
 ﻿
 
-namespace BankStatementScannerLibrary.Input.ImageScanner
+namespace BankStatementScannerLibrary.Input
 {
     public class ImageScanner
     {
-        public static String ProcessImage(String filename)
+        public static string ProcessImage(string filename)
         {
-            String notImplemented = "Image Processing Not Implemented";
+            const string notImplemented = "Image Processing Not Implemented";
             return notImplemented;
         }
     }

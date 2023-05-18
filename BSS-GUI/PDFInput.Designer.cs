@@ -1,6 +1,6 @@
 ﻿namespace Bank_Statement_Scanner
 {
-    partial class PDFInput
+    partial class PdfInput
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PDFInput));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PdfInput));
             this.PDFInputLabel = new System.Windows.Forms.Label();
             this.OutputLabel = new System.Windows.Forms.Label();
             this.ExtractFormattedButton = new System.Windows.Forms.Button();
@@ -247,7 +247,7 @@
             this.Controls.Add(this.PDFInputLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(820, 500);
-            this.Name = "PDFInput";
+            this.Name = "PdfInput";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Bank Statement Scanner";
             ((System.ComponentModel.ISupportInitialize)(this.CSVFileViewer)).EndInit();

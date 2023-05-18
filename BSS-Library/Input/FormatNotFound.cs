@@ -9,11 +9,11 @@ namespace BankStatementScannerLibrary.Input
         {
         }
 
-        public FormatNotFoundException(String message) : base(message)
+        public FormatNotFoundException(string message) : base(message)
         {
         }
 
-        public FormatNotFoundException(String message, Exception innerException) : base(message, innerException)
+        public FormatNotFoundException(string message, Exception innerException) : base(message, innerException)
         {
         }
 

@@ -1,5 +1,4 @@
-﻿using BankStatementScannerLibrary.TextHelpers;
-using System.Text;
+﻿using System.Text;
 using System.Text.RegularExpressions;
 
 namespace BankStatementScannerLibrary.Processors
@@ -13,11 +12,11 @@ namespace BankStatementScannerLibrary.Processors
         /// </summary>
         /// <param name="raw">String array input from PDF text extraction.</param>
         /// <returns>Formatted string</returns>
-        public String ProcessPDFString(string[] raw)
+        public string ProcessPdfString(string[] raw)
         {
-            String[] startConditions = { "Year-to-Date" };
-            String[] stopConditions = { "Purchases and Adjustments" };
-            List<String> transactions = TextProcessor.GetTransactionData(raw, startConditions, stopConditions);
+            string[] startConditions = { "Year-to-Date" };
+            string[] stopConditions = { "Purchases and Adjustments" };
+            List<string> transactions = TextProcessor.GetTransactionData(raw, startConditions, stopConditions);
 
             List<DateOnly> dateRange = TextProcessor.FindBillingDate(raw, "Account #");
             if (dateRange.Count == 0)
@@ -30,9 +29,9 @@ namespace BankStatementScannerLibrary.Processors
             return ParseData(transactions, dateRange);
         }
 
-        public String ParseData(List<String> transactions, List<DateOnly>? dateRange = null) 
+        public string ParseData(List<string> transactions, List<DateOnly>? dateRange = null) 
         {
-            Boolean Header = false;
+            bool header = false;
             StringBuilder sb = new();
             DateOnly tempDate = new();
             transactions.Sort(TextProcessor.DateComparable);
@@ -41,8 +40,8 @@ namespace BankStatementScannerLibrary.Processors
             {
                 if (transactions[i].Length > 15 && DateOnly.TryParseExact(transactions[i].Remove(10), "MM/dd/yyyy", out tempDate))
                 {
-                    String newString = TextProcessor.FormatAmount(transactions[i]);
-                    Int32 commaIndex = TextProcessor.SecondCommaIndex(newString);
+                    string newString = TextProcessor.FormatAmount(transactions[i]);
+                    int commaIndex = TextProcessor.SecondCommaIndex(newString);
                     
                     if(commaIndex != 0)
                     {
@@ -55,15 +54,15 @@ namespace BankStatementScannerLibrary.Processors
                     {
                         sb.Append(newString + '\n');
                     }
-                } //Table Header/Seperator. 
-                else if (transactions[i].Contains("Date Date Description Number Number Amount") && !Header)
+                } //Table Header/Separator. 
+                else if (transactions[i].Contains("Date Date Description Number Number Amount") && !header)
                 {
                     sb.Append("Trans Date,Description,Amount\n");
-                    Header = true;
+                    header = true;
                 }
             }
 
-            String result = sb.ToString();
+            string result = sb.ToString();
             return result;
         }
     }

@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using BankStatementScannerLibrary.Input.ImageScanner;
-using BankStatementScannerLibrary.TextHelpers;
+﻿using BankStatementScannerLibrary;
+using BankStatementScannerLibrary.Input;
 
 namespace Bank_Statement_Scanner
 {
@@ -26,30 +17,30 @@ namespace Bank_Statement_Scanner
 
         private void BeginScanButton_Click(object sender, EventArgs e)
         {
-            String FileName = UploadFileDialog.SafeFileName;
-            String Input = UploadFileDialog.FileName;
-            String Name = "";
-            foreach(char c in FileName)
+            string fileName = UploadFileDialog.SafeFileName;
+            string input = UploadFileDialog.FileName;
+            string name = "";
+            foreach(char c in fileName)
             {
                 if(!c.Equals('.'))
                 {
-                    Name += c; 
+                    name += c; 
                 } else
                 {
                     break;
                 }
             }
-            String OutputFile = Name + "Output.txt";
-            String Result = ImageScanner.ProcessImage(Input);
-            File.WriteAllText(OutputFile.FullFilePath(), Result);
+            string outputFile = name + "Output.txt";
+            string result = ImageScanner.ProcessImage(input);
+            File.WriteAllText(outputFile.FullFilePath(), result);
         }
 
         private void PDFSwitch_Click(object sender, EventArgs e)
         {
-            PDFInput PDFInput = new PDFInput();
-            PDFInput.Location = this.Location;
+            PdfInput pdfInput = new PdfInput();
+            pdfInput.Location = this.Location;
             this.Hide();
-            PDFInput.Show();
+            pdfInput.Show();
         }
 
         private void CSVFileViewer_CellContentClick(object sender, DataGridViewCellEventArgs e)

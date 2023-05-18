@@ -12,6 +12,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankStatementScannerLibrary
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{28C76A8E-505E-48AA-B94B-1F72A8983EE2}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BSS Setup", "..\BSS Setup\BSS Setup.vdproj", "{14B4440A-27DA-46AC-B253-318B8FE84CE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,8 @@ Global
 		{F05F4C35-77BC-4D93-BCE9-9B07BD880813}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F05F4C35-77BC-4D93-BCE9-9B07BD880813}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F05F4C35-77BC-4D93-BCE9-9B07BD880813}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14B4440A-27DA-46AC-B253-318B8FE84CE4}.Debug|Any CPU.ActiveCfg = Debug
+		{14B4440A-27DA-46AC-B253-318B8FE84CE4}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

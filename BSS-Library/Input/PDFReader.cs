@@ -3,35 +3,34 @@ using UglyToad.PdfPig.Content;
 using UglyToad.PdfPig.DocumentLayoutAnalysis.PageSegmenter;
 using UglyToad.PdfPig.DocumentLayoutAnalysis.WordExtractor;
 
-namespace BankStatementScannerLibrary.Input.PDFReader
+namespace BankStatementScannerLibrary.Input
 {
-    public class PDFReader
+    public class PdfReader
     {
-        public static String ExtractPDF(String filename)
+        public static string ExtractPdf(string filename)
         {
-            String result = "";
-            using (PdfDocument document = PdfDocument.Open(filename))
+            string result = "";
+            using PdfDocument document = PdfDocument.Open(filename);
+            foreach (Page page in document.GetPages())
             {
-                foreach (Page page in document.GetPages())
+                var words = page.GetWords(NearestNeighbourWordExtractor.Instance);
+
+                var options = new RecursiveXYCut.RecursiveXYCutOptions()
                 {
-                    var words = page.GetWords(NearestNeighbourWordExtractor.Instance);
+                    MinimumWidth = page.Width / 1.25,
+                    DominantFontWidthFunc = letters => letters.Select(l => l.GlyphRectangle.Width).Max(),
+                    DominantFontHeightFunc = letters => letters.Select(l => l.GlyphRectangle.Height).Average()
+                };
 
-                    var options = new RecursiveXYCut.RecursiveXYCutOptions()
-                    {
-                        MinimumWidth = page.Width / 1.25,
-                        DominantFontWidthFunc = letters => letters.Select(l => l.GlyphRectangle.Width).Max(),
-                        DominantFontHeightFunc = letters => letters.Select(l => l.GlyphRectangle.Height).Average()
-                    };
+                var xyCut = new RecursiveXYCut(options);
+                var blocks = xyCut.GetBlocks(words);
 
-                    var xyCut = new RecursiveXYCut(options);
-                    var blocks = xyCut.GetBlocks(words);
-
-                    foreach (var block in blocks)
-                    {
-                        result += block.Text + "\n";
-                    }
+                foreach (var block in blocks)
+                {
+                    result += block.Text + "\n";
                 }
             }
+
             return result;
         }
     }
