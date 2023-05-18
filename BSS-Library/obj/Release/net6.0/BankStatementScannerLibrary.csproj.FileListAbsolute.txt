@@ -1,0 +1,12 @@
+C:\Users\Matt\source\repos\BankStatementScannerLibrary\bin\Release\net6.0\BankStatementScannerLibrary.deps.json
+C:\Users\Matt\source\repos\BankStatementScannerLibrary\bin\Release\net6.0\BankStatementScannerLibrary.dll
+C:\Users\Matt\source\repos\BankStatementScannerLibrary\bin\Release\net6.0\BankStatementScannerLibrary.pdb
+C:\Users\Matt\source\repos\BankStatementScannerLibrary\obj\Release\net6.0\BankStatementScannerLibrary.csproj.AssemblyReference.cache
+C:\Users\Matt\source\repos\BankStatementScannerLibrary\obj\Release\net6.0\BankStatementScannerLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Matt\source\repos\BankStatementScannerLibrary\obj\Release\net6.0\BankStatementScannerLibrary.AssemblyInfoInputs.cache
+C:\Users\Matt\source\repos\BankStatementScannerLibrary\obj\Release\net6.0\BankStatementScannerLibrary.AssemblyInfo.cs
+C:\Users\Matt\source\repos\BankStatementScannerLibrary\obj\Release\net6.0\BankStatementScannerLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Matt\source\repos\BankStatementScannerLibrary\obj\Release\net6.0\BankStatementScannerLibrary.dll
+C:\Users\Matt\source\repos\BankStatementScannerLibrary\obj\Release\net6.0\refint\BankStatementScannerLibrary.dll
+C:\Users\Matt\source\repos\BankStatementScannerLibrary\obj\Release\net6.0\BankStatementScannerLibrary.pdb
+C:\Users\Matt\source\repos\BankStatementScannerLibrary\obj\Release\net6.0\ref\BankStatementScannerLibrary.dll
