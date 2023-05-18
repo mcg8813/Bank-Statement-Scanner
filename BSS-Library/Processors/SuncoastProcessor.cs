@@ -36,32 +36,32 @@ namespace BankStatementScannerLibrary.Processors
 
             for (int listIndex = 0; listIndex < transactions.Count; listIndex++)
             {
-                if (transactions[listIndex].Length > 15 && DateOnly.TryParseExact(transactions[listIndex].Remove(10), "MM/dd/yyyy", out DateOnly tempDate))
+                if (transactions[listIndex].Length <= 15 || !DateOnly.TryParseExact(transactions[listIndex].Remove(10),
+                        "MM/dd/yyyy", out DateOnly tempDate)) continue;
+
+                transactions[listIndex] = transactions[listIndex].Insert(10, ","); // Insert First Comma
+                string effDateRemoved = TextProcessor.RemoveUntilSpace(transactions[listIndex], 11, true); // Remove second date
+                string newBalanceRemoved = TextProcessor.RemoveUntilSpace(effDateRemoved, effDateRemoved.Length - 1, true, true); // Remove New Balance
+                string newString = TextProcessor.FormatAmount(newBalanceRemoved); // Format Amount
+                int commaIndex = TextProcessor.SecondCommaIndex(newString); // Index of second Comma
+
+                if (commaIndex != 0)
                 {
-                    transactions[listIndex] = transactions[listIndex].Insert(10, ","); // Insert First Comma
-                    string effDateRemoved = TextProcessor.RemoveUntilSpace(transactions[listIndex], 11, true); // Remove second date
-                    string newBalanceRemoved = TextProcessor.RemoveUntilSpace(effDateRemoved, effDateRemoved.Length - 1, true, true); // Remove New Balance
-                    string newString = TextProcessor.FormatAmount(newBalanceRemoved); // Format Amount
-                    int commaIndex = TextProcessor.SecondCommaIndex(newString); // Index of second Comma
-
-                    if (commaIndex != 0)
+                    int nextIndex = listIndex + 1;
+                    while (nextIndex < transactions.Count && transactions[nextIndex].Length > 10 && !DateOnly.TryParseExact(transactions[nextIndex].Remove(10), "MM/dd/yyyy", out tempDate))
                     {
-                        int nextIndex = listIndex + 1;
-                        while (nextIndex < transactions.Count && transactions[nextIndex].Length > 10 && !DateOnly.TryParseExact(transactions[nextIndex].Remove(10), "MM/dd/yyyy", out tempDate))
-                        {
-                            newString = newString.Insert(commaIndex, " " + transactions[nextIndex]);
-                            commaIndex += transactions[nextIndex].Length + 1;
-                            nextIndex++;
-                            listIndex++;
-                        }
+                        newString = newString.Insert(commaIndex, " " + transactions[nextIndex]);
+                        commaIndex += transactions[nextIndex].Length + 1;
+                        nextIndex++;
+                        listIndex++;
                     }
+                }
 
-                    //Add to result.
-                    if (Regex.Matches(newString, @",").Count >= 2 && Regex.Matches(newString, @"$").Count > 0)
-                    {
-                        sb.Append(newString + '\n');
-                    }
-                } 
+                //Add to result.
+                if (Regex.Matches(newString, @",").Count >= 2 && Regex.Matches(newString, @"$").Count > 0)
+                {
+                    sb.Append(newString + '\n');
+                }
             }
 
             string result = sb.ToString();

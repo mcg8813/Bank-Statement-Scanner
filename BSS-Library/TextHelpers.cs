@@ -411,7 +411,7 @@ namespace BankStatementScannerLibrary
         /// <param name="decreasing"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public static string RemoveUntilSpace(string str, int startIndex, bool deleteSpace = false, bool decreasing = false)
+        public static string RemoveUntilSpace(string str, int startIndex, bool deleteSpace = false, bool decreasing = false, int spaceCount = 1) // TODO - Param for number of spaces.
         {
             char[] chars = str.ToCharArray();
             int maxIndex = str.Length - 1;
@@ -438,8 +438,18 @@ namespace BankStatementScannerLibrary
                 }
             }
 
-            while (current > 0 && current <= maxIndex && chars[current] != ' ')
+            while (current > 0 && current <= maxIndex)
             {
+                if (chars[current] == ' ')
+                {
+                    spaceCount--;
+                }
+
+                if (spaceCount == 0)
+                {
+                    break;
+                }
+
                 count++; 
                 if(!decreasing)
                 {

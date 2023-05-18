@@ -137,7 +137,7 @@ namespace Bank_Statement_Scanner
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FolderSelect_Click(object sender, EventArgs e)
+        private void FolderSelect_Click(object sender, EventArgs e) // TODO - Add button to change output folder to the same location as input file.
         {
             DialogResult dr = SelectFolderDialog.ShowDialog();
             string folderPath = SelectFolderDialog.SelectedPath;

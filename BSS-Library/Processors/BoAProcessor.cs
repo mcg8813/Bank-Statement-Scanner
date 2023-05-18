@@ -31,34 +31,28 @@ namespace BankStatementScannerLibrary.Processors
 
         public string ParseData(List<string> transactions, List<DateOnly>? dateRange = null) 
         {
-            bool header = false;
             StringBuilder sb = new();
-            DateOnly tempDate = new();
+            sb.Append("Trans Date,Description,Amount\n");
             transactions.Sort(TextProcessor.DateComparable);
 
             for (int i = 0; i < transactions.Count; i++)
             {
-                if (transactions[i].Length > 15 && DateOnly.TryParseExact(transactions[i].Remove(10), "MM/dd/yyyy", out tempDate))
-                {
-                    string newString = TextProcessor.FormatAmount(transactions[i]);
-                    int commaIndex = TextProcessor.SecondCommaIndex(newString);
-                    
-                    if(commaIndex != 0)
-                    {
-                        // TODO - Change to RemoveUntilSpace.
-                        newString = newString.Remove(commaIndex - 10, 9).Remove(11, 6); // Removes post date and account number. 
-                    }
+                if (transactions[i].Length <= 15 ||
+                    !DateOnly.TryParseExact(transactions[i].Remove(10), "MM/dd/yyyy", out DateOnly tempDate)) continue;
 
-                    //Add to result.
-                    if (Regex.Matches(newString, @",").Count >= 2 && Regex.Matches(newString, @"$").Count > 0)
-                    {
-                        sb.Append(newString + '\n');
-                    }
-                } //Table Header/Separator. 
-                else if (transactions[i].Contains("Date Date Description Number Number Amount") && !header)
+                string newString = TextProcessor.FormatAmount(transactions[i]);
+                int commaIndex = TextProcessor.SecondCommaIndex(newString);
+                    
+                if(commaIndex != 0)
                 {
-                    sb.Append("Trans Date,Description,Amount\n");
-                    header = true;
+                    // Removes post date and account number.
+                    newString = TextProcessor.RemoveUntilSpace(newString, commaIndex - 1, true, true, 2).Remove(11, 6); 
+                }
+
+                //Add to result.
+                if (Regex.Matches(newString, @",").Count == 2 && Regex.Matches(newString, @"$").Count > 0)
+                {
+                    sb.Append(newString + '\n');
                 }
             }
 

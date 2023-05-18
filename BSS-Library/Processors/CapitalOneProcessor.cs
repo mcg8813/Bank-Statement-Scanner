@@ -68,32 +68,27 @@ namespace BankStatementScannerLibrary.Processors
         /// <returns>Output string.</returns>
         private static string ParseFirstFormat(List<string> transactions, List<DateOnly> dateRange)
         {
-            bool header = false;
             StringBuilder sb = new();
+            sb.Append("Date,Description,Amount\n");
             transactions.Sort(TextProcessor.DateComparable);
 
             for (int i = 0; i < transactions.Count; i++)
             {
-                if (transactions[i].Length > 15 && DateOnly.TryParseExact(transactions[i].Remove(10), "MM/dd/yyyy", out DateOnly tempDate))
-                {
-                    while (!transactions[i].Contains('$') && !transactions[i + 1].Contains("Transactions"))
-                    {
-                        transactions[i] = transactions[i] + ' ' + transactions[i + 1];
-                        transactions.RemoveAt(i + 1);
-                    }
+                if (transactions[i].Length <= 15 ||
+                    !DateOnly.TryParseExact(transactions[i].Remove(10), "MM/dd/yyyy", out DateOnly tempDate)) continue;
 
-                    string newString = TextProcessor.FormatAmount(transactions[i]);
-
-                    //Add to result.
-                    if (Regex.Matches(newString, @",").Count >= 2 && Regex.Matches(newString, @"$").Count > 0)
-                    {
-                        sb.Append(newString + '\n');
-                    }
-                } //Table Header/Separator. 
-                else if (transactions[i].Contains("Date Description Amount") && !header)
+                while (!transactions[i].Contains('$') && !transactions[i + 1].Contains("Transactions"))
                 {
-                    sb.Append("Date,Description,Amount\n");
-                    header = true;
+                    transactions[i] = transactions[i] + ' ' + transactions[i + 1];
+                    transactions.RemoveAt(i + 1);
+                }
+
+                string newString = TextProcessor.FormatAmount(transactions[i]);
+
+                //Add to result.
+                if (Regex.Matches(newString, @",").Count >= 2 && Regex.Matches(newString, @"$").Count > 0)
+                {
+                    sb.Append(newString + '\n');
                 }
             }
 
@@ -109,38 +104,28 @@ namespace BankStatementScannerLibrary.Processors
         /// <returns>Output string.</returns>
         private static string ParseSecondFormat(List<string> transactions, List<DateOnly> dateRange) 
         {
-            bool header = false;
             StringBuilder sb = new();
+            sb.Append("Date,Description,Amount\n");
             transactions.Sort(TextProcessor.DateComparable);
 
             for (int i = 0; i < transactions.Count; i++)
             {
-                if (transactions[i].Length > 15 && DateOnly.TryParseExact(transactions[i].Remove(10), "MM/dd/yyyy", out DateOnly tempDate))
-                {
-                    string newString = TextProcessor.FormatAmount(transactions[i]);
-                    int commaIndex = TextProcessor.SecondCommaIndex(newString);
+                if (transactions[i].Length <= 15 ||
+                    !DateOnly.TryParseExact(transactions[i].Remove(10), "MM/dd/yyyy", out DateOnly tempDate)) continue;
 
-                    if (commaIndex != 0 && newString.Length > 17)
-                    {
-                        if (newString[17].Equals(' '))
-                        {
-                            newString = newString.Remove(11, 7); // Remove leading space in second column 
-                        } else
-                        {
-                            newString = newString.Remove(11, 6); // No leading space.
-                        }
-                    }
+                string newString = TextProcessor.FormatAmount(transactions[i]);
+                int commaIndex = TextProcessor.SecondCommaIndex(newString);
 
-                    //Add to result.
-                    if(Regex.Matches(newString, @",").Count >= 2 && Regex.Matches(newString, @"$").Count > 0)
-                    {
-                        sb.Append(newString + '\n');
-                    }
-                } //Table Header/Separator. 
-                else if (transactions[i].Contains("Trans Date Post Date Description Amount") && !header)
+                if (commaIndex != 0 && newString.Length > 17)
                 {
-                    sb.Append("Date,Description,Amount\n");
-                    header = true;
+                    newString = newString.Remove(11, newString[17].Equals(' ') ? 7 : // Remove leading space in second column 
+                        6); // No leading space.
+                }
+
+                //Add to result.
+                if(Regex.Matches(newString, @",").Count >= 2 && Regex.Matches(newString, @"$").Count > 0)
+                {
+                    sb.Append(newString + '\n');
                 }
             }
 
