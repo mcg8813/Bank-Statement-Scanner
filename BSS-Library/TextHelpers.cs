@@ -1,5 +1,7 @@
 ﻿using System.Configuration;
+
 using System.Text;
+using Org.BouncyCastle.Math.EC;
 
 namespace BankStatementScannerLibrary
 {
@@ -31,9 +33,7 @@ namespace BankStatementScannerLibrary
         /// <returns>Full File path. Example: "C:\data\BankStatementScanner\'filename'"</returns>
         public static string FullFilePath(this string filename)
         {
-            // Default points to app location + \Output
-            // C:\data\BankStatementScanner
-            return $"{ConfigurationManager.AppSettings["filePath"]}\\{filename}"; // TODO - Actual Config file, Default output file location
+            return $"{ConfigurationManager.AppSettings["OutputFolder"]}\\{filename}";
         }
 
         /// <summary>
@@ -408,10 +408,11 @@ namespace BankStatementScannerLibrary
         /// </summary>
         /// <param name="str"></param>
         /// <param name="startIndex"></param>
+        /// <param name="deleteSpace"></param>
         /// <param name="decreasing"></param>
+        /// <param name="spaceCount"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public static string RemoveUntilSpace(string str, int startIndex, bool deleteSpace = false, bool decreasing = false, int spaceCount = 1) // TODO - Param for number of spaces.
+        public static string RemoveUntilSpace(string str, int startIndex, bool deleteSpace = false, bool decreasing = false, int spaceCount = 1)
         {
             char[] chars = str.ToCharArray();
             int maxIndex = str.Length - 1;

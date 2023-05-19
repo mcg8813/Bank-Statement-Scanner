@@ -1,3 +1,5 @@
+using System.Configuration;
+
 namespace Bank_Statement_Scanner
 {
     internal static class Program

@@ -46,6 +46,7 @@
             this.ErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.FilePathBox = new System.Windows.Forms.TextBox();
             this.ExtractRawButton = new System.Windows.Forms.Button();
+            this.SetOutputToInput = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CSVFileViewer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.webView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewsContainer)).BeginInit();
@@ -141,13 +142,14 @@
             // FolderSelect
             // 
             this.FolderSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.FolderSelect.BackColor = System.Drawing.SystemColors.Control;
             this.FolderSelect.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FolderSelect.Location = new System.Drawing.Point(707, 9);
             this.FolderSelect.Name = "FolderSelect";
             this.FolderSelect.Size = new System.Drawing.Size(85, 25);
             this.FolderSelect.TabIndex = 12;
             this.FolderSelect.Text = "Select Folder";
-            this.FolderSelect.UseVisualStyleBackColor = true;
+            this.FolderSelect.UseVisualStyleBackColor = false;
             this.FolderSelect.Click += new System.EventHandler(this.FolderSelect_Click);
             // 
             // UploadFileDialog
@@ -229,11 +231,26 @@
             this.ExtractRawButton.UseVisualStyleBackColor = false;
             this.ExtractRawButton.Click += new System.EventHandler(this.ExtractRawButton_Click);
             // 
-            // PDFInput
+            // SetOutputToInput
+            // 
+            this.SetOutputToInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.SetOutputToInput.Enabled = false;
+            this.SetOutputToInput.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.SetOutputToInput.Location = new System.Drawing.Point(620, 9);
+            this.SetOutputToInput.Name = "SetOutputToInput";
+            this.SetOutputToInput.Size = new System.Drawing.Size(81, 25);
+            this.SetOutputToInput.TabIndex = 18;
+            this.SetOutputToInput.Text = "Set To Input";
+            this.SetOutputToInput.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.SetOutputToInput.UseVisualStyleBackColor = true;
+            this.SetOutputToInput.Click += new System.EventHandler(this.SetOutputToInput_Click);
+            // 
+            // PdfInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(804, 461);
+            this.Controls.Add(this.SetOutputToInput);
             this.Controls.Add(this.ExtractRawButton);
             this.Controls.Add(this.FilePathBox);
             this.Controls.Add(this.PreviewsContainer);
@@ -280,5 +297,6 @@
         private ErrorProvider ErrorProvider;
         private TextBox FilePathBox;
         private Button ExtractRawButton;
+        private Button SetOutputToInput;
     }
 }

@@ -3,16 +3,27 @@ using System.Configuration;
 using System.Data;
 using System.Text;
 using BankStatementScannerLibrary;
+using RestSharp.Extensions;
 
 namespace Bank_Statement_Scanner
 {
     public partial class PdfInput : Form
     {
+        private static string defaultPath = Properties.Settings.Default.DefaultOutputFolderPath;
         /// <summary>
         /// Initalizes form.
         /// </summary>
         public PdfInput()
         {
+            string executableDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string folderPath = Path.Combine(executableDirectory, "Outputs");
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            Properties.Settings.Default.DefaultOutputFolderPath = folderPath;
+            Properties.Settings.Default.Save();
+            Properties.Settings.Default.Reload();
             InitializeComponent();
         }
 
@@ -31,6 +42,7 @@ namespace Bank_Statement_Scanner
                 ExtractFormattedButton.Enabled = true;
                 ExtractRawButton.Enabled = true;
                 webView.Visible = true;
+                SetOutputToInput.Enabled = true;
             }
         }
 
@@ -57,32 +69,34 @@ namespace Bank_Statement_Scanner
         /// <param name="e"></param>
         private void ExtractFormattedButton_Click(object sender, EventArgs e) // TODO - Add tests methods
         {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None); 
-            string filepath = config.AppSettings.Settings["filePath"].Value;
-
-            bool possiblePath = filepath.IndexOfAny(Path.GetInvalidPathChars()) == -1;
-
-            if (possiblePath && !string.IsNullOrEmpty(filepath))
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            if (config.AppSettings.Settings["UseDefaultPath"].Value == "false")
             {
-                if (UploadFileDialog.SafeFileName == null) return;
-                string filename = UploadFileDialog.SafeFileName;
-                string input = UploadFileDialog.FileName;
-
-                int dotIndex = filename.IndexOf('.');
-                string name = filename.Remove(dotIndex);
-
-                string outputFile = name + "Output.csv";
-                string raw = PdfReader.ExtractPdf(input);
-                FilePathBox.Text = outputFile.FullFilePath();
-                string[] result = raw.Split("\n");
-                string csv = Sorter.GetFormat(result);
-
-                File.WriteAllText(outputFile.FullFilePath(), csv);
-                BindData(outputFile.FullFilePath());
-            } else
-            {
-                ErrorProvider.SetError(FolderSelect, "Select Folder");
+                string filepath = config.AppSettings.Settings["OutputFolder"].Value;
+                bool possiblePath = filepath.IndexOfAny(Path.GetInvalidPathChars()) == -1;
+                if (!possiblePath && string.IsNullOrEmpty(filepath))
+                {
+                    ErrorProvider.SetError(FolderSelect, "Invalid Save Location");
+                    return;
+                }
             }
+
+            if (UploadFileDialog.SafeFileName == null) return;
+            string filename = UploadFileDialog.SafeFileName;
+            string input = UploadFileDialog.FileName;
+
+            int dotIndex = filename.IndexOf('.');
+            string name = filename.Remove(dotIndex);
+
+            string outputFile = name + "Output.csv";
+            string raw = PdfReader.ExtractPdf(input);
+            string filePath = GetPath(outputFile);
+            FilePathBox.Text = filePath;
+            string[] result = raw.Split("\n");
+            string csv = Sorter.GetFormat(result);
+
+            File.WriteAllText(filePath, csv);
+            BindData(filePath);
         }
 
         /// <summary>
@@ -137,18 +151,34 @@ namespace Bank_Statement_Scanner
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FolderSelect_Click(object sender, EventArgs e) // TODO - Add button to change output folder to the same location as input file.
+        private void FolderSelect_Click(object sender, EventArgs e)
         {
+            SetOutputToInput.Enabled = true;
             DialogResult dr = SelectFolderDialog.ShowDialog();
             string folderPath = SelectFolderDialog.SelectedPath;
 
             if (dr != DialogResult.OK) return;
 
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings["filePath"].Value = folderPath;
-            config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection("appSettings");
-            ErrorProvider.Clear();
+            ChangeOutputFolder(folderPath);
+            FolderSelect.BackColor = SystemColors.ActiveBorder;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SetOutputToInput_Click(object sender, EventArgs e)
+        {
+            string fileName = UploadFileDialog.FileName; 
+            string? fileDirectory = Path.GetDirectoryName(fileName);
+
+            if (fileDirectory == null) return;
+
+            FolderSelect.Enabled = true;
+            FolderSelect.BackColor = SystemColors.Control;
+            ChangeOutputFolder(fileDirectory);
+            SetOutputToInput.Enabled = false;
         }
 
         /// <summary>
@@ -158,11 +188,9 @@ namespace Bank_Statement_Scanner
         /// <param name="e"></param>
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            if (UploadFileDialog.SafeFileName == null) return;
-            string filename = UploadFileDialog.SafeFileName;
-            int dotIndex = filename.IndexOf('.');
-            string name = filename.Remove(dotIndex);
-            string outputCsv = name + "Output.csv";
+            if (UploadFileDialog.FileName == null) return;
+            string fileName = UploadFileDialog.FileName;
+            string outputCsv = fileName + "Output.csv";
             StringBuilder sb = new();
 
             var headers = CSVFileViewer.Columns.Cast<DataGridViewColumn>();
@@ -175,33 +203,50 @@ namespace Bank_Statement_Scanner
             }
 
             string result = sb.ToString();
-            File.WriteAllText(outputCsv.FullFilePath(), result);
+            string filepath = GetPath(outputCsv);
+            File.WriteAllText(filepath, result);
         }
 
         private void ExtractRawButton_Click(object sender, EventArgs e)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            string filepath = config.AppSettings.Settings["filePath"].Value;
-
-            bool possiblePath = filepath.IndexOfAny(Path.GetInvalidPathChars()) == -1;
-
-            if (possiblePath && !string.IsNullOrEmpty(filepath))
+            if (config.AppSettings.Settings["UseDefaultPath"].Value == "false")
             {
-                if (UploadFileDialog.SafeFileName == null) return;
-                string filename = UploadFileDialog.SafeFileName;
-                string input = UploadFileDialog.FileName;
-                int dotIndex = filename.IndexOf('.');
-                string name = filename.Remove(dotIndex);
-                string rawOutputFile = name + "RawOutput.csv";
-                string raw = PdfReader.ExtractPdf(input);
-                FilePathBox.Text = rawOutputFile.FullFilePath();
-                File.WriteAllText(rawOutputFile.FullFilePath(), raw);
-                Console.WriteLine("Extract Complete");
+                string filepath = config.AppSettings.Settings["OutputFolder"].Value;
+                bool possiblePath = filepath.IndexOfAny(Path.GetInvalidPathChars()) == -1;
+                if (!possiblePath && string.IsNullOrEmpty(filepath))
+                {
+                    ErrorProvider.SetError(FolderSelect, "Invalid Save Location");
+                    return;
+                }
             }
-            else
-            {
-                ErrorProvider.SetError(FolderSelect, "Select Folder");
-            }
+
+            if (UploadFileDialog.SafeFileName == null) return;
+            string filename = UploadFileDialog.SafeFileName;
+            string input = UploadFileDialog.FileName;
+            int dotIndex = filename.IndexOf('.');
+            string name = filename.Remove(dotIndex);
+            string rawOutputFile = name + "RawOutput.csv";
+            string raw = PdfReader.ExtractPdf(input);
+            string filePath = GetPath(rawOutputFile);
+            FilePathBox.Text = filePath;
+            File.WriteAllText(filePath, raw);
+            Console.WriteLine("Extract Complete");
+        }
+
+        private static void ChangeOutputFolder(string newFolder)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.AppSettings.Settings["OutputFolder"].Value = newFolder;
+            config.AppSettings.Settings["UseDefaultPath"].Value = "false";
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
+        private static string GetPath(string fileName)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            return config.AppSettings.Settings["UseDefaultPath"].Value == "true" ? defaultPath : fileName.FullFilePath();
         }
     }
 }

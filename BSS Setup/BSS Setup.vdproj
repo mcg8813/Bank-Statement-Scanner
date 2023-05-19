@@ -13,6 +13,18 @@
 "SccProvider" = "8:"
     "Hierarchy"
     {
+        "Entry"
+        {
+        "MsmKey" = "8:_28401901625F45A8958F887D2D44EAF8"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9FCC1CC747024B60B2B505FE727CB807"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -68,6 +80,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_28401901625F45A8958F887D2D44EAF8"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\Pictures\\finalclipart_wpf_icon.ico"
+            "TargetName" = "8:BSS_icon.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_A46D852FD0444FB5906BB919C587AEED"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -106,6 +138,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_C0E1FF6C817B448EA70B4185DF346D3C"
+                    {
+                    "Name" = "8:Outputs"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_1C445864D8024B95BE02FE731AE4D68B"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
         }
@@ -133,12 +176,12 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:mcg8813"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:BSS Setup"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:Matt Greene"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
@@ -245,6 +288,34 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_64142A4DA14A499E9A33EF8C66A387BC"
+            {
+            "Name" = "8:Bank Statement Scanner"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_9FCC1CC747024B60B2B505FE727CB807"
+            "Folder" = "8:_9C56A596E7A24F819D6C0EF444C9E2E4"
+            "WorkingFolder" = "8:_A46D852FD0444FB5906BB919C587AEED"
+            "Icon" = "8:_28401901625F45A8958F887D2D44EAF8"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_ACBD73E98E594B219A7C9F1FBA39BD3E"
+            {
+            "Name" = "8:Bank Statement Scanner"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_9FCC1CC747024B60B2B505FE727CB807"
+            "Folder" = "8:_115482B284AD432A9ED88FD365C1DF72"
+            "WorkingFolder" = "8:_A46D852FD0444FB5906BB919C587AEED"
+            "Icon" = "8:_28401901625F45A8958F887D2D44EAF8"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
@@ -644,6 +715,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_9FCC1CC747024B60B2B505FE727CB807"
+            {
+            "SourcePath" = "8:..\\BSS-GUI\\obj\\Debug\\net6.0-windows\\apphost.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A46D852FD0444FB5906BB919C587AEED"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:PublishItems"
+            "OutputProjectGuid" = "8:{6ECF45ED-AC39-418D-931B-A32B2DF120AE}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
         }
     }
 }
