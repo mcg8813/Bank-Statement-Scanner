@@ -3,7 +3,6 @@ using System.Configuration;
 using System.Data;
 using System.Text;
 using BankStatementScannerLibrary;
-using RestSharp.Extensions;
 
 namespace Bank_Statement_Scanner
 {
@@ -15,6 +14,12 @@ namespace Bank_Statement_Scanner
         /// </summary>
         public PdfInput()
         {
+            UpdateDefaultPath();
+            InitializeComponent();
+        }
+
+        private static void UpdateDefaultPath()
+        {
             string executableDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string folderPath = Path.Combine(executableDirectory, "Outputs");
             if (!Directory.Exists(folderPath))
@@ -24,7 +29,6 @@ namespace Bank_Statement_Scanner
             Properties.Settings.Default.DefaultOutputFolderPath = folderPath;
             Properties.Settings.Default.Save();
             Properties.Settings.Default.Reload();
-            InitializeComponent();
         }
 
         /// <summary>

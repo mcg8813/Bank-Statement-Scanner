@@ -25,7 +25,7 @@ namespace Bank_Statement_Scanner.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Username\\Documents\\BSS-Outputs")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string DefaultOutputFolderPath {
             get {
                 return ((string)(this["DefaultOutputFolderPath"]));

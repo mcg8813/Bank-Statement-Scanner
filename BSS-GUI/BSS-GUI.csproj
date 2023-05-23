@@ -7,14 +7,30 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>BSS-Icon.ico</ApplicationIcon>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageIcon>BSS-Icon.ico</PackageIcon>
+    <RepositoryUrl>https://github.com/mcg8813/Bank-Statement-Scanner.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/mcg8813/Bank-Statement-Scanner</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1587.40" />
+    <Content Include="BSS-Icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BSS-Library\BankStatementScannerLibrary.csproj" />
+    <None Include="..\BSS-Icon.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1774.30" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BSS-Library\BSS-Library.csproj" />
   </ItemGroup>
 
   <ItemGroup>

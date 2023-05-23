@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="DefaultOutputFolderPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\Username\Documents\BSS-Outputs</Value>
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

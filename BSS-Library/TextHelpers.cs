@@ -1,7 +1,6 @@
 ﻿using System.Configuration;
 
 using System.Text;
-using Org.BouncyCastle.Math.EC;
 
 namespace BankStatementScannerLibrary
 {
