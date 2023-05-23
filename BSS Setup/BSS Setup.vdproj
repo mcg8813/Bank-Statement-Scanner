@@ -15,13 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_28401901625F45A8958F887D2D44EAF8"
+        "MsmKey" = "8:_9FCC1CC747024B60B2B505FE727CB807"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_9FCC1CC747024B60B2B505FE727CB807"
+        "MsmKey" = "8:_FC3B2D53D7F441D094C4D33247DE48E8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -43,6 +43,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -59,6 +67,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -76,14 +92,24 @@
         {
             "LaunchCondition"
             {
+                "{A06ECF26-33A3-4562-8140-9B0E340D4F24}:_0C6EE0899FB6482E91C3B58C3F0CCBDA"
+                {
+                "Name" = "8:.NET Core"
+                "Message" = "8:[VSDNETCOREMSG]"
+                "AllowLaterVersions" = "11:FALSE"
+                "InstallUrl" = "8:https://dotnet.microsoft.com/download/dotnet-core/[NetCoreVerMajorDotMinor]"
+                "IsNETCore" = "11:TRUE"
+                "Architecture" = "2:0"
+                "Runtime" = "2:0"
+                }
             }
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_28401901625F45A8958F887D2D44EAF8"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FC3B2D53D7F441D094C4D33247DE48E8"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\Pictures\\finalclipart_wpf_icon.ico"
-            "TargetName" = "8:BSS_icon.ico"
+            "SourcePath" = "8:..\\BSS-Icon.ico"
+            "TargetName" = "8:BSS-Icon.ico"
             "Tag" = "8:"
             "Folder" = "8:_A46D852FD0444FB5906BB919C587AEED"
             "Condition" = "8:"
@@ -299,7 +325,7 @@
             "Target" = "8:_9FCC1CC747024B60B2B505FE727CB807"
             "Folder" = "8:_9C56A596E7A24F819D6C0EF444C9E2E4"
             "WorkingFolder" = "8:_A46D852FD0444FB5906BB919C587AEED"
-            "Icon" = "8:_28401901625F45A8958F887D2D44EAF8"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_ACBD73E98E594B219A7C9F1FBA39BD3E"
@@ -313,7 +339,7 @@
             "Target" = "8:_9FCC1CC747024B60B2B505FE727CB807"
             "Folder" = "8:_115482B284AD432A9ED88FD365C1DF72"
             "WorkingFolder" = "8:_A46D852FD0444FB5906BB919C587AEED"
-            "Icon" = "8:_28401901625F45A8958F887D2D44EAF8"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
         }
