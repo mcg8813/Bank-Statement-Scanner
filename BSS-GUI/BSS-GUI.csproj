@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
     <RootNamespace>Bank_Statement_Scanner</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
@@ -12,6 +12,8 @@
     <PackageIcon>BSS-Icon.ico</PackageIcon>
     <RepositoryUrl>https://github.com/mcg8813/Bank-Statement-Scanner.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/mcg8813/Bank-Statement-Scanner</PackageProjectUrl>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <UseWPF>True</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1774.30" />
   </ItemGroup>
 

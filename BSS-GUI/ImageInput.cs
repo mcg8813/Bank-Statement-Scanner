@@ -1,4 +1,5 @@
-﻿using BankStatementScannerLibrary;
+﻿using System.IO;
+using BankStatementScannerLibrary;
 using BankStatementScannerLibrary.Input;
 
 namespace Bank_Statement_Scanner

@@ -1,8 +1,11 @@
 using BankStatementScannerLibrary.Input;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Text;
+using Squirrel;
 using BankStatementScannerLibrary;
+using Squirrel.Sources;
 
 namespace Bank_Statement_Scanner
 {
@@ -16,6 +19,14 @@ namespace Bank_Statement_Scanner
         {
             UpdateDefaultPath();
             InitializeComponent();
+            CheckForUpdates();
+        }
+
+        private async Task CheckForUpdates()
+        {
+            using var mgr =
+                new UpdateManager(new GithubSource(@"https://github.com/mcg8813/Bank-Statement-Scanner", "", false));
+            await mgr.UpdateApp();
         }
 
         private static void UpdateDefaultPath()
