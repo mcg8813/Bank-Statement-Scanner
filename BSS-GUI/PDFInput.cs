@@ -1,7 +1,9 @@
 using BankStatementScannerLibrary.Input;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Squirrel;
 using BankStatementScannerLibrary;
@@ -19,14 +21,24 @@ namespace Bank_Statement_Scanner
         {
             UpdateDefaultPath();
             InitializeComponent();
+            AddVersionNumber();
             CheckForUpdates();
         }
 
-        private async Task CheckForUpdates()
+        private void AddVersionNumber()
+        {
+            System.Reflection.Assembly assembly = typeof(PdfInput).Assembly;
+            FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+
+            this.Text += $"v.{versionInfo.FileVersion}";
+        }
+
+        private static async Task CheckForUpdates()
         {
             using var mgr =
                 new UpdateManager(new GithubSource(@"https://github.com/mcg8813/Bank-Statement-Scanner", "", false));
-            await mgr.UpdateApp();
+            var newVersion = await mgr.UpdateApp();
+            if (newVersion != null) UpdateManager.RestartApp();
         }
 
         private static void UpdateDefaultPath()
