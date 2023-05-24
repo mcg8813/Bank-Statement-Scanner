@@ -59,7 +59,7 @@ jobs:
       Solution_Name: BankStatementScanner.sln                        # Replace with your solution name, i.e. MyWpfApp.sln.
       Test_Project_Path: BSS-GUI/BSS-GUI.csproj               # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
       Wap_Project_Directory: BankStatementScanner.Package    # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
-      Wap_Project_Path: BankStatementScanner.Package\BankStatementScanner.Package.wpfproj                   # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
+      Wap_Project_Path: BankStatementScanner.Package\BankStatementScanner.Package.wapproj                   # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
       
     steps:
     - name: Checkout
