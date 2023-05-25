@@ -28,255 +28,256 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PdfInput));
-            this.PDFInputLabel = new System.Windows.Forms.Label();
-            this.OutputLabel = new System.Windows.Forms.Label();
-            this.ExtractFormattedButton = new System.Windows.Forms.Button();
-            this.ImageSwitch = new System.Windows.Forms.Button();
-            this.UploadButton = new System.Windows.Forms.Button();
-            this.ScanProgress = new System.Windows.Forms.ProgressBar();
-            this.CSVFileViewer = new System.Windows.Forms.DataGridView();
-            this.FolderSelect = new System.Windows.Forms.Button();
-            this.UploadFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.webView = new Microsoft.Web.WebView2.WinForms.WebView2();
-            this.SaveButton = new System.Windows.Forms.Button();
-            this.SelectFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.PreviewsContainer = new System.Windows.Forms.SplitContainer();
-            this.ErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.FilePathBox = new System.Windows.Forms.TextBox();
-            this.ExtractRawButton = new System.Windows.Forms.Button();
-            this.SetOutputToInput = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.CSVFileViewer)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.webView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PreviewsContainer)).BeginInit();
-            this.PreviewsContainer.Panel1.SuspendLayout();
-            this.PreviewsContainer.Panel2.SuspendLayout();
-            this.PreviewsContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorProvider)).BeginInit();
-            this.SuspendLayout();
+            PDFInputLabel = new Label();
+            OutputLabel = new Label();
+            ExtractFormattedButton = new Button();
+            ImageSwitch = new Button();
+            UploadButton = new Button();
+            ScanProgress = new ProgressBar();
+            CSVFileViewer = new DataGridView();
+            FolderSelect = new Button();
+            UploadFileDialog = new OpenFileDialog();
+            webView = new Microsoft.Web.WebView2.WinForms.WebView2();
+            SaveButton = new Button();
+            SelectFolderDialog = new FolderBrowserDialog();
+            PreviewsContainer = new SplitContainer();
+            ErrorProvider = new ErrorProvider(components);
+            FilePathBox = new TextBox();
+            ExtractRawButton = new Button();
+            SetOutputToInput = new Button();
+            ((System.ComponentModel.ISupportInitialize)CSVFileViewer).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)webView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PreviewsContainer).BeginInit();
+            PreviewsContainer.Panel1.SuspendLayout();
+            PreviewsContainer.Panel2.SuspendLayout();
+            PreviewsContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ErrorProvider).BeginInit();
+            SuspendLayout();
             // 
             // PDFInputLabel
             // 
-            this.PDFInputLabel.AutoSize = true;
-            this.PDFInputLabel.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.PDFInputLabel.Location = new System.Drawing.Point(10, 10);
-            this.PDFInputLabel.Name = "PDFInputLabel";
-            this.PDFInputLabel.Size = new System.Drawing.Size(104, 24);
-            this.PDFInputLabel.TabIndex = 0;
-            this.PDFInputLabel.Text = "PDF Input";
+            PDFInputLabel.AutoSize = true;
+            PDFInputLabel.Font = new Font("Times New Roman", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            PDFInputLabel.Location = new Point(10, 10);
+            PDFInputLabel.Name = "PDFInputLabel";
+            PDFInputLabel.Size = new Size(104, 24);
+            PDFInputLabel.TabIndex = 0;
+            PDFInputLabel.Text = "PDF Input";
             // 
             // OutputLabel
             // 
-            this.OutputLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.OutputLabel.AutoSize = true;
-            this.OutputLabel.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.OutputLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.OutputLabel.Location = new System.Drawing.Point(400, 10);
-            this.OutputLabel.Name = "OutputLabel";
-            this.OutputLabel.Size = new System.Drawing.Size(73, 24);
-            this.OutputLabel.TabIndex = 2;
-            this.OutputLabel.Text = "Output";
+            OutputLabel.Anchor = AnchorStyles.Top;
+            OutputLabel.AutoSize = true;
+            OutputLabel.Font = new Font("Times New Roman", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            OutputLabel.ForeColor = SystemColors.ControlText;
+            OutputLabel.Location = new Point(400, 10);
+            OutputLabel.Name = "OutputLabel";
+            OutputLabel.Size = new Size(73, 24);
+            OutputLabel.TabIndex = 2;
+            OutputLabel.Text = "Output";
             // 
             // ExtractFormattedButton
             // 
-            this.ExtractFormattedButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ExtractFormattedButton.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ExtractFormattedButton.Enabled = false;
-            this.ExtractFormattedButton.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ExtractFormattedButton.Location = new System.Drawing.Point(116, 430);
-            this.ExtractFormattedButton.Name = "ExtractFormattedButton";
-            this.ExtractFormattedButton.Size = new System.Drawing.Size(121, 25);
-            this.ExtractFormattedButton.TabIndex = 7;
-            this.ExtractFormattedButton.Text = "Extract Formatted";
-            this.ExtractFormattedButton.UseVisualStyleBackColor = false;
-            this.ExtractFormattedButton.Click += new System.EventHandler(this.ExtractFormattedButton_Click);
+            ExtractFormattedButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            ExtractFormattedButton.BackColor = SystemColors.ControlLightLight;
+            ExtractFormattedButton.Enabled = false;
+            ExtractFormattedButton.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ExtractFormattedButton.Location = new Point(12, 430);
+            ExtractFormattedButton.Name = "ExtractFormattedButton";
+            ExtractFormattedButton.Size = new Size(144, 25);
+            ExtractFormattedButton.TabIndex = 7;
+            ExtractFormattedButton.Text = "Extract Formatted";
+            ExtractFormattedButton.UseVisualStyleBackColor = false;
+            ExtractFormattedButton.Click += ExtractFormattedButton_Click;
             // 
             // ImageSwitch
             // 
-            this.ImageSwitch.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ImageSwitch.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ImageSwitch.Location = new System.Drawing.Point(299, 9);
-            this.ImageSwitch.Name = "ImageSwitch";
-            this.ImageSwitch.Size = new System.Drawing.Size(90, 25);
-            this.ImageSwitch.TabIndex = 8;
-            this.ImageSwitch.Text = "Image Input";
-            this.ImageSwitch.UseVisualStyleBackColor = false;
-            this.ImageSwitch.Visible = false;
-            this.ImageSwitch.Click += new System.EventHandler(this.ImageSwitch_Click);
+            ImageSwitch.BackColor = SystemColors.ControlLightLight;
+            ImageSwitch.Font = new Font("Times New Roman", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            ImageSwitch.Location = new Point(194, 9);
+            ImageSwitch.Name = "ImageSwitch";
+            ImageSwitch.Size = new Size(90, 25);
+            ImageSwitch.TabIndex = 8;
+            ImageSwitch.Text = "Image Input";
+            ImageSwitch.UseVisualStyleBackColor = false;
+            ImageSwitch.Visible = false;
+            ImageSwitch.Click += ImageSwitch_Click;
             // 
             // UploadButton
             // 
-            this.UploadButton.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.UploadButton.DialogResult = System.Windows.Forms.DialogResult.No;
-            this.UploadButton.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.UploadButton.Location = new System.Drawing.Point(120, 9);
-            this.UploadButton.Name = "UploadButton";
-            this.UploadButton.Size = new System.Drawing.Size(75, 25);
-            this.UploadButton.TabIndex = 9;
-            this.UploadButton.Text = "Upload";
-            this.UploadButton.UseVisualStyleBackColor = false;
-            this.UploadButton.Click += new System.EventHandler(this.UploadButton_Click);
+            UploadButton.AutoSize = true;
+            UploadButton.BackColor = SystemColors.ControlLightLight;
+            UploadButton.DialogResult = DialogResult.No;
+            UploadButton.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UploadButton.Location = new Point(120, 9);
+            UploadButton.Name = "UploadButton";
+            UploadButton.Size = new Size(75, 25);
+            UploadButton.TabIndex = 9;
+            UploadButton.Text = "Upload";
+            UploadButton.UseVisualStyleBackColor = false;
+            UploadButton.Click += UploadButton_Click;
             // 
             // ScanProgress
             // 
-            this.ScanProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ScanProgress.Location = new System.Drawing.Point(243, 439);
-            this.ScanProgress.Name = "ScanProgress";
-            this.ScanProgress.Size = new System.Drawing.Size(146, 10);
-            this.ScanProgress.TabIndex = 10;
+            ScanProgress.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            ScanProgress.Location = new Point(162, 439);
+            ScanProgress.Name = "ScanProgress";
+            ScanProgress.Size = new Size(227, 10);
+            ScanProgress.TabIndex = 10;
             // 
             // CSVFileViewer
             // 
-            this.CSVFileViewer.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.CSVFileViewer.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.CSVFileViewer.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
-            this.CSVFileViewer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.CSVFileViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CSVFileViewer.Location = new System.Drawing.Point(0, 0);
-            this.CSVFileViewer.Name = "CSVFileViewer";
-            this.CSVFileViewer.RowTemplate.Height = 25;
-            this.CSVFileViewer.Size = new System.Drawing.Size(398, 387);
-            this.CSVFileViewer.TabIndex = 11;
+            CSVFileViewer.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            CSVFileViewer.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            CSVFileViewer.BackgroundColor = SystemColors.ActiveBorder;
+            CSVFileViewer.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            CSVFileViewer.Dock = DockStyle.Fill;
+            CSVFileViewer.Location = new Point(0, 0);
+            CSVFileViewer.Name = "CSVFileViewer";
+            CSVFileViewer.RowTemplate.Height = 25;
+            CSVFileViewer.Size = new Size(398, 387);
+            CSVFileViewer.TabIndex = 11;
             // 
             // FolderSelect
             // 
-            this.FolderSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.FolderSelect.BackColor = System.Drawing.SystemColors.Control;
-            this.FolderSelect.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.FolderSelect.Location = new System.Drawing.Point(707, 9);
-            this.FolderSelect.Name = "FolderSelect";
-            this.FolderSelect.Size = new System.Drawing.Size(85, 25);
-            this.FolderSelect.TabIndex = 12;
-            this.FolderSelect.Text = "Select Folder";
-            this.FolderSelect.UseVisualStyleBackColor = false;
-            this.FolderSelect.Click += new System.EventHandler(this.FolderSelect_Click);
+            FolderSelect.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            FolderSelect.AutoSize = true;
+            FolderSelect.BackColor = SystemColors.Control;
+            FolderSelect.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            FolderSelect.Location = new Point(694, 9);
+            FolderSelect.Name = "FolderSelect";
+            FolderSelect.Size = new Size(98, 25);
+            FolderSelect.TabIndex = 12;
+            FolderSelect.Text = "Select Folder";
+            FolderSelect.UseVisualStyleBackColor = false;
+            FolderSelect.Click += FolderSelect_Click;
             // 
             // UploadFileDialog
             // 
-            this.UploadFileDialog.Filter = "pdf files (*.pdf)|*.pdf";
+            UploadFileDialog.Filter = "pdf files (*.pdf)|*.pdf";
             // 
             // webView
             // 
-            this.webView.AllowExternalDrop = true;
-            this.webView.CreationProperties = null;
-            this.webView.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webView.Location = new System.Drawing.Point(0, 0);
-            this.webView.Name = "webView";
-            this.webView.Size = new System.Drawing.Size(380, 387);
-            this.webView.Source = new System.Uri("https://microsoft.com", System.UriKind.Absolute);
-            this.webView.TabIndex = 13;
-            this.webView.Visible = false;
-            this.webView.ZoomFactor = 1D;
+            webView.AllowExternalDrop = true;
+            webView.CreationProperties = null;
+            webView.DefaultBackgroundColor = Color.White;
+            webView.Dock = DockStyle.Fill;
+            webView.Location = new Point(0, 0);
+            webView.Name = "webView";
+            webView.Size = new Size(380, 387);
+            webView.Source = new Uri("https://microsoft.com", UriKind.Absolute);
+            webView.TabIndex = 13;
+            webView.Visible = false;
+            webView.ZoomFactor = 1D;
             // 
             // SaveButton
             // 
-            this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SaveButton.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.SaveButton.Location = new System.Drawing.Point(717, 430);
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(75, 23);
-            this.SaveButton.TabIndex = 14;
-            this.SaveButton.Text = "Save";
-            this.SaveButton.UseVisualStyleBackColor = true;
-            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            SaveButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            SaveButton.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            SaveButton.Location = new Point(717, 430);
+            SaveButton.Name = "SaveButton";
+            SaveButton.Size = new Size(75, 23);
+            SaveButton.TabIndex = 14;
+            SaveButton.Text = "Save";
+            SaveButton.UseVisualStyleBackColor = true;
+            SaveButton.Click += SaveButton_Click;
             // 
             // PreviewsContainer
             // 
-            this.PreviewsContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.PreviewsContainer.Location = new System.Drawing.Point(10, 37);
-            this.PreviewsContainer.Name = "PreviewsContainer";
+            PreviewsContainer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            PreviewsContainer.Location = new Point(10, 37);
+            PreviewsContainer.Name = "PreviewsContainer";
             // 
             // PreviewsContainer.Panel1
             // 
-            this.PreviewsContainer.Panel1.Controls.Add(this.webView);
+            PreviewsContainer.Panel1.Controls.Add(webView);
             // 
             // PreviewsContainer.Panel2
             // 
-            this.PreviewsContainer.Panel2.Controls.Add(this.CSVFileViewer);
-            this.PreviewsContainer.Size = new System.Drawing.Size(782, 387);
-            this.PreviewsContainer.SplitterDistance = 380;
-            this.PreviewsContainer.TabIndex = 15;
+            PreviewsContainer.Panel2.Controls.Add(CSVFileViewer);
+            PreviewsContainer.Size = new Size(782, 387);
+            PreviewsContainer.SplitterDistance = 380;
+            PreviewsContainer.TabIndex = 15;
             // 
             // ErrorProvider
             // 
-            this.ErrorProvider.ContainerControl = this;
+            ErrorProvider.ContainerControl = this;
             // 
             // FilePathBox
             // 
-            this.FilePathBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.FilePathBox.BackColor = System.Drawing.SystemColors.Window;
-            this.FilePathBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.FilePathBox.Location = new System.Drawing.Point(395, 433);
-            this.FilePathBox.MinimumSize = new System.Drawing.Size(317, 16);
-            this.FilePathBox.Name = "FilePathBox";
-            this.FilePathBox.ReadOnly = true;
-            this.FilePathBox.Size = new System.Drawing.Size(317, 16);
-            this.FilePathBox.TabIndex = 16;
+            FilePathBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            FilePathBox.BackColor = SystemColors.Window;
+            FilePathBox.BorderStyle = BorderStyle.None;
+            FilePathBox.Location = new Point(395, 433);
+            FilePathBox.MinimumSize = new Size(317, 16);
+            FilePathBox.Name = "FilePathBox";
+            FilePathBox.ReadOnly = true;
+            FilePathBox.Size = new Size(317, 16);
+            FilePathBox.TabIndex = 16;
+            FilePathBox.TextAlign = HorizontalAlignment.Right;
             // 
             // ExtractRawButton
             // 
-            this.ExtractRawButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ExtractRawButton.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ExtractRawButton.Enabled = false;
-            this.ExtractRawButton.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ExtractRawButton.Location = new System.Drawing.Point(10, 430);
-            this.ExtractRawButton.Name = "ExtractRawButton";
-            this.ExtractRawButton.Size = new System.Drawing.Size(100, 25);
-            this.ExtractRawButton.TabIndex = 17;
-            this.ExtractRawButton.Text = "Extract Raw";
-            this.ExtractRawButton.UseVisualStyleBackColor = false;
-            this.ExtractRawButton.Click += new System.EventHandler(this.ExtractRawButton_Click);
+            ExtractRawButton.Anchor = AnchorStyles.Top;
+            ExtractRawButton.BackColor = SystemColors.ControlLightLight;
+            ExtractRawButton.Enabled = false;
+            ExtractRawButton.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ExtractRawButton.Location = new Point(290, 9);
+            ExtractRawButton.Name = "ExtractRawButton";
+            ExtractRawButton.Size = new Size(100, 25);
+            ExtractRawButton.TabIndex = 17;
+            ExtractRawButton.Text = "Extract Raw";
+            ExtractRawButton.UseVisualStyleBackColor = false;
+            ExtractRawButton.Visible = false;
+            ExtractRawButton.Click += ExtractRawButton_Click;
             // 
             // SetOutputToInput
             // 
-            this.SetOutputToInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.SetOutputToInput.Enabled = false;
-            this.SetOutputToInput.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.SetOutputToInput.Location = new System.Drawing.Point(620, 9);
-            this.SetOutputToInput.Name = "SetOutputToInput";
-            this.SetOutputToInput.Size = new System.Drawing.Size(81, 25);
-            this.SetOutputToInput.TabIndex = 18;
-            this.SetOutputToInput.Text = "Set To Input";
-            this.SetOutputToInput.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.SetOutputToInput.UseVisualStyleBackColor = true;
-            this.SetOutputToInput.Click += new System.EventHandler(this.SetOutputToInput_Click);
+            SetOutputToInput.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            SetOutputToInput.AutoSize = true;
+            SetOutputToInput.Enabled = false;
+            SetOutputToInput.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            SetOutputToInput.Location = new Point(598, 9);
+            SetOutputToInput.Name = "SetOutputToInput";
+            SetOutputToInput.Size = new Size(90, 25);
+            SetOutputToInput.TabIndex = 18;
+            SetOutputToInput.Text = "Set To Input";
+            SetOutputToInput.UseVisualStyleBackColor = true;
+            SetOutputToInput.Click += SetOutputToInput_Click;
             // 
             // PdfInput
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 461);
-            this.Controls.Add(this.SetOutputToInput);
-            this.Controls.Add(this.ExtractRawButton);
-            this.Controls.Add(this.FilePathBox);
-            this.Controls.Add(this.PreviewsContainer);
-            this.Controls.Add(this.SaveButton);
-            this.Controls.Add(this.FolderSelect);
-            this.Controls.Add(this.ScanProgress);
-            this.Controls.Add(this.UploadButton);
-            this.Controls.Add(this.ImageSwitch);
-            this.Controls.Add(this.ExtractFormattedButton);
-            this.Controls.Add(this.OutputLabel);
-            this.Controls.Add(this.PDFInputLabel);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(820, 500);
-            this.Name = "PdfInput";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Bank Statement Scanner";
-            ((System.ComponentModel.ISupportInitialize)(this.CSVFileViewer)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.webView)).EndInit();
-            this.PreviewsContainer.Panel1.ResumeLayout(false);
-            this.PreviewsContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PreviewsContainer)).EndInit();
-            this.PreviewsContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorProvider)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(804, 461);
+            Controls.Add(SetOutputToInput);
+            Controls.Add(ExtractRawButton);
+            Controls.Add(FilePathBox);
+            Controls.Add(PreviewsContainer);
+            Controls.Add(SaveButton);
+            Controls.Add(FolderSelect);
+            Controls.Add(ScanProgress);
+            Controls.Add(UploadButton);
+            Controls.Add(ImageSwitch);
+            Controls.Add(ExtractFormattedButton);
+            Controls.Add(OutputLabel);
+            Controls.Add(PDFInputLabel);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(820, 500);
+            Name = "PdfInput";
+            StartPosition = FormStartPosition.Manual;
+            Text = "Bank Statement Scanner";
+            ((System.ComponentModel.ISupportInitialize)CSVFileViewer).EndInit();
+            ((System.ComponentModel.ISupportInitialize)webView).EndInit();
+            PreviewsContainer.Panel1.ResumeLayout(false);
+            PreviewsContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)PreviewsContainer).EndInit();
+            PreviewsContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)ErrorProvider).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

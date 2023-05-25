@@ -105,7 +105,7 @@ namespace Bank_Statement_Scanner
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ExtractFormattedButton_Click(object sender, EventArgs e)  
+        private void ExtractFormattedButton_Click(object sender, EventArgs e)
         {
             // TODO - Add tests methods
             // TODO - Update Progress bar.
@@ -148,7 +148,7 @@ namespace Bank_Statement_Scanner
         {
             DataTable dt = new();
             string[] lines = File.ReadAllLines(filePath);
-            List<string> headerLabels = new(){ "Trans Date", "Description", "Amount" };
+            List<string> headerLabels = new() { "Trans Date", "Description", "Amount" };
 
 
             if (lines.Length > 0)
@@ -211,7 +211,7 @@ namespace Bank_Statement_Scanner
         /// <param name="e"></param>
         private void SetOutputToInput_Click(object sender, EventArgs e)
         {
-            string fileName = UploadFileDialog.FileName; 
+            string fileName = UploadFileDialog.FileName;
             string? fileDirectory = Path.GetDirectoryName(fileName);
 
             if (fileDirectory == null) return;
