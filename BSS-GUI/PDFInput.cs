@@ -3,7 +3,6 @@ using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
 using Squirrel;
 using BankStatementScannerLibrary;
@@ -14,25 +13,35 @@ namespace Bank_Statement_Scanner
     public partial class PdfInput : Form
     {
         private static string defaultPath = Properties.Settings.Default.DefaultOutputFolderPath;
+
         /// <summary>
-        /// Initalizes form.
+        /// Initializes form.
         /// </summary>
         public PdfInput()
         {
             UpdateDefaultPath();
             InitializeComponent();
             AddVersionNumber();
+#pragma warning disable CS4014
             CheckForUpdates();
+#pragma warning restore CS4014
         }
 
+        /// <summary>
+        /// Adds the version number to window title.
+        /// </summary>
         private void AddVersionNumber()
         {
             System.Reflection.Assembly assembly = typeof(PdfInput).Assembly;
             FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
 
-            this.Text += $"v.{versionInfo.FileVersion}";
+            this.Text += $" v{versionInfo.FileVersion}";
         }
 
+        /// <summary>
+        /// Checks github releases page for newer version and updates if there is.
+        /// </summary>
+        /// <returns></returns>
         private static async Task CheckForUpdates()
         {
             using var mgr =
@@ -41,6 +50,10 @@ namespace Bank_Statement_Scanner
             if (newVersion != null) UpdateManager.RestartApp();
         }
 
+
+        /// <summary>
+        /// Sets the default path for output folder. Ideally never used. 
+        /// </summary>
         private static void UpdateDefaultPath()
         {
             string executableDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -62,15 +75,13 @@ namespace Bank_Statement_Scanner
         private void UploadButton_Click(object sender, EventArgs e)
         {
             DialogResult = UploadFileDialog.ShowDialog();
-            if(DialogResult == DialogResult.OK)
-            {
-                string webFilePath = "file:///" + UploadFileDialog.FileName;
-                webView.Source = new Uri(webFilePath);
-                ExtractFormattedButton.Enabled = true;
-                ExtractRawButton.Enabled = true;
-                webView.Visible = true;
-                SetOutputToInput.Enabled = true;
-            }
+            if (DialogResult != DialogResult.OK) return;
+            string webFilePath = "file:///" + UploadFileDialog.FileName;
+            webView.Source = new Uri(webFilePath);
+            ExtractFormattedButton.Enabled = true;
+            ExtractRawButton.Enabled = true;
+            webView.Visible = true;
+            SetOutputToInput.Enabled = true;
         }
 
         /// <summary>
@@ -94,8 +105,11 @@ namespace Bank_Statement_Scanner
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ExtractFormattedButton_Click(object sender, EventArgs e) // TODO - Add tests methods
+        private void ExtractFormattedButton_Click(object sender, EventArgs e)  
         {
+            // TODO - Add tests methods
+            // TODO - Update Progress bar.
+
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             if (config.AppSettings.Settings["UseDefaultPath"].Value == "false")
             {
@@ -191,7 +205,7 @@ namespace Bank_Statement_Scanner
         }
 
         /// <summary>
-        /// 
+        /// Button to conveniently set the output directory to the input file's directory.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -209,7 +223,7 @@ namespace Bank_Statement_Scanner
         }
 
         /// <summary>
-        /// 
+        /// Saves any modification to the table.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -234,6 +248,11 @@ namespace Bank_Statement_Scanner
             File.WriteAllText(filepath, result);
         }
 
+        /// <summary>
+        /// Outputs the PdfPigs's extraction without modification. (Mostly used for debugging)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ExtractRawButton_Click(object sender, EventArgs e)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -261,6 +280,10 @@ namespace Bank_Statement_Scanner
             Console.WriteLine("Extract Complete");
         }
 
+        /// <summary>
+        /// Changes the "OutputFolder" attribute's value app settings. 
+        /// </summary>
+        /// <param name="newFolder">New directory's path</param>
         private static void ChangeOutputFolder(string newFolder)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -270,6 +293,11 @@ namespace Bank_Statement_Scanner
             ConfigurationManager.RefreshSection("appSettings");
         }
 
+        /// <summary>
+        /// Use's default path if no other path has been selected. Uses "FullFilePath" otherwise.
+        /// </summary>
+        /// <param name="fileName">Name of file</param>
+        /// <returns></returns>
         private static string GetPath(string fileName)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);

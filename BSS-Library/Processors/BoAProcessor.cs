@@ -16,19 +16,25 @@ namespace BankStatementScannerLibrary.Processors
         {
             string[] startConditions = { "Year-to-Date" };
             string[] stopConditions = { "Purchases and Adjustments" };
-            List<string> transactions = TextProcessor.GetTransactionData(raw, startConditions, stopConditions);
 
+            List<string> transactions = TextProcessor.GetTransactionData(raw, startConditions, stopConditions);
             List<DateOnly> dateRange = TextProcessor.FindBillingDate(raw, "Account #");
+
             if (dateRange.Count == 0)
             {
                 return "No date range found";
             }
 
             transactions = TextProcessor.ConvertDateFormat(transactions, dateRange, "MM/dd"); // No need to convert, just add year.
-
             return ParseData(transactions, dateRange);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transactions"></param>
+        /// <param name="dateRange"></param>
+        /// <returns></returns>
         public string ParseData(List<string> transactions, List<DateOnly>? dateRange = null) 
         {
             StringBuilder sb = new();

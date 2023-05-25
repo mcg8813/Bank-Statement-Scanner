@@ -17,19 +17,25 @@ namespace BankStatementScannerLibrary.Processors
             string[] startConditions = { "Date Description Amount" };
             string[] stopConditions = { "Fees\r" };
             string[] exceptions = { "Billing Cycle" };
-            List<string> transactions = TextProcessor.GetTransactionData(raw, startConditions, stopConditions, exceptions);
 
+            List<string> transactions = TextProcessor.GetTransactionData(raw, startConditions, stopConditions, exceptions);
             List<DateOnly> dateRange = TextProcessor.FindBillingDate(raw, "days in Billing Cycle");
+
             if (dateRange.Count == 0)
             {
                 return "Unable to determine date range";
             }
 
             transactions = TextProcessor.ConvertDateFormat(transactions, dateRange, "MMM dd");
-
             return ParseData(transactions, dateRange);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transactions"></param>
+        /// <param name="dateRange"></param>
+        /// <returns></returns>
         public string ParseData(List<string> transactions, List<DateOnly>? dateRange = null)
         {
             if (dateRange == null)
@@ -58,7 +64,6 @@ namespace BankStatementScannerLibrary.Processors
         {
             return transactions.Any(str => str.Contains("Trans Date Post Date")) ? 2 : 1;
         }
-
 
         /// <summary>
         /// Processes the first format of capital one transaction data.

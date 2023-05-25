@@ -4,6 +4,12 @@ namespace BankStatementScannerLibrary.Input
 {
     public class Sorter
     {
+        /// <summary>
+        /// Instantiates the correct processor implementation.
+        /// </summary>
+        /// <param name="raw"></param>
+        /// <returns></returns>
+        /// <exception cref="FormatNotFoundException"></exception>
         public static string GetFormat(string[] raw)
         {
             IProcessor? processor = null;
@@ -37,4 +43,3 @@ namespace BankStatementScannerLibrary.Input
         }
     }
 }
-
