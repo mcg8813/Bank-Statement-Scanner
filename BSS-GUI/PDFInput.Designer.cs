@@ -35,7 +35,6 @@
             ExtractFormattedButton = new Button();
             ImageSwitch = new Button();
             UploadButton = new Button();
-            ScanProgress = new ProgressBar();
             CSVFileViewer = new DataGridView();
             FolderSelect = new Button();
             UploadFileDialog = new OpenFileDialog();
@@ -96,7 +95,7 @@
             // 
             ImageSwitch.BackColor = SystemColors.ControlLightLight;
             ImageSwitch.Font = new Font("Times New Roman", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            ImageSwitch.Location = new Point(194, 9);
+            ImageSwitch.Location = new Point(201, 9);
             ImageSwitch.Name = "ImageSwitch";
             ImageSwitch.Size = new Size(90, 25);
             ImageSwitch.TabIndex = 8;
@@ -119,14 +118,6 @@
             UploadButton.UseVisualStyleBackColor = false;
             UploadButton.Click += UploadButton_Click;
             // 
-            // ScanProgress
-            // 
-            ScanProgress.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            ScanProgress.Location = new Point(162, 439);
-            ScanProgress.Name = "ScanProgress";
-            ScanProgress.Size = new Size(227, 10);
-            ScanProgress.TabIndex = 10;
-            // 
             // CSVFileViewer
             // 
             CSVFileViewer.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
@@ -144,7 +135,7 @@
             // 
             FolderSelect.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             FolderSelect.AutoSize = true;
-            FolderSelect.BackColor = SystemColors.Control;
+            FolderSelect.BackColor = Color.White;
             FolderSelect.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             FolderSelect.Location = new Point(694, 9);
             FolderSelect.Name = "FolderSelect";
@@ -207,7 +198,7 @@
             // 
             // FilePathBox
             // 
-            FilePathBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            FilePathBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             FilePathBox.BackColor = SystemColors.Window;
             FilePathBox.BorderStyle = BorderStyle.None;
             FilePathBox.Location = new Point(395, 433);
@@ -220,11 +211,11 @@
             // 
             // ExtractRawButton
             // 
-            ExtractRawButton.Anchor = AnchorStyles.Top;
+            ExtractRawButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             ExtractRawButton.BackColor = SystemColors.ControlLightLight;
             ExtractRawButton.Enabled = false;
             ExtractRawButton.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            ExtractRawButton.Location = new Point(290, 9);
+            ExtractRawButton.Location = new Point(162, 430);
             ExtractRawButton.Name = "ExtractRawButton";
             ExtractRawButton.Size = new Size(100, 25);
             ExtractRawButton.TabIndex = 17;
@@ -258,7 +249,6 @@
             Controls.Add(PreviewsContainer);
             Controls.Add(SaveButton);
             Controls.Add(FolderSelect);
-            Controls.Add(ScanProgress);
             Controls.Add(UploadButton);
             Controls.Add(ImageSwitch);
             Controls.Add(ExtractFormattedButton);
@@ -287,7 +277,6 @@
         private Button ExtractFormattedButton;
         private Button ImageSwitch;
         private Button UploadButton;
-        private ProgressBar ScanProgress;
         private DataGridView CSVFileViewer;
         private Button FolderSelect;
         private OpenFileDialog UploadFileDialog;

@@ -108,7 +108,6 @@ namespace Bank_Statement_Scanner
         private void ExtractFormattedButton_Click(object sender, EventArgs e)
         {
             // TODO - Add tests methods
-            // TODO - Update Progress bar.
 
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             if (config.AppSettings.Settings["UseDefaultPath"].Value == "false")
