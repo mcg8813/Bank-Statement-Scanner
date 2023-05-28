@@ -4,15 +4,13 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
     <RootNamespace>Bank_Statement_Scanner</RootNamespace>
-	  <Version>1.0.2</Version>
-	  <AssemblyVersion>1.0.2</AssemblyVersion>
-	  <FileVersion>1.0.2</FileVersion>
+	  <Version>1.0.3</Version>
+	  <FileVersion>1.0.3</FileVersion>
 	  <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationIcon>BSS-Icon.ico</ApplicationIcon>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <PackageIcon>BSS-png.png</PackageIcon>
+	  <PackageIcon>BSS_PNG.png</PackageIcon>
+	  <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/mcg8813/Bank-Statement-Scanner.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/mcg8813/Bank-Statement-Scanner</PackageProjectUrl>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
@@ -21,19 +19,14 @@
     <PackageId>BankStatementScanner</PackageId>
     <Title>Bank Statement Scanner</Title>
     <Authors>Matt Greene</Authors>
-    <RepositoryType>git</RepositoryType>
-    <Description>App that formats bank transactions from a pdf file to csv </Description>
+	  
+	  <Description>App that formats bank transactions from a pdf file to csv </Description>
+	  
+	  <ApplicationIcon>BSS_Icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="BSS-Icon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\BSS-png.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <Content Include="BSS_Icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,6 +59,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="BSS_PNG.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -46,6 +46,7 @@
             FilePathBox = new TextBox();
             ExtractRawButton = new Button();
             SetOutputToInput = new Button();
+            InputPanel = new Panel();
             ((System.ComponentModel.ISupportInitialize)CSVFileViewer).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PreviewsContainer).BeginInit();
@@ -53,15 +54,16 @@
             PreviewsContainer.Panel2.SuspendLayout();
             PreviewsContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ErrorProvider).BeginInit();
+            InputPanel.SuspendLayout();
             SuspendLayout();
             // 
             // PDFInputLabel
             // 
-            PDFInputLabel.AutoSize = true;
+            PDFInputLabel.Dock = DockStyle.Left;
             PDFInputLabel.Font = new Font("Times New Roman", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
-            PDFInputLabel.Location = new Point(10, 10);
+            PDFInputLabel.Location = new Point(0, 0);
             PDFInputLabel.Name = "PDFInputLabel";
-            PDFInputLabel.Size = new Size(104, 24);
+            PDFInputLabel.Size = new Size(104, 28);
             PDFInputLabel.TabIndex = 0;
             PDFInputLabel.Text = "PDF Input";
             // 
@@ -95,7 +97,7 @@
             // 
             ImageSwitch.BackColor = SystemColors.ControlLightLight;
             ImageSwitch.Font = new Font("Times New Roman", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            ImageSwitch.Location = new Point(201, 9);
+            ImageSwitch.Location = new Point(208, 6);
             ImageSwitch.Name = "ImageSwitch";
             ImageSwitch.Size = new Size(90, 25);
             ImageSwitch.TabIndex = 8;
@@ -106,13 +108,13 @@
             // 
             // UploadButton
             // 
-            UploadButton.AutoSize = true;
             UploadButton.BackColor = SystemColors.ControlLightLight;
             UploadButton.DialogResult = DialogResult.No;
+            UploadButton.Dock = DockStyle.Right;
             UploadButton.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            UploadButton.Location = new Point(120, 9);
+            UploadButton.Location = new Point(115, 0);
             UploadButton.Name = "UploadButton";
-            UploadButton.Size = new Size(75, 25);
+            UploadButton.Size = new Size(75, 28);
             UploadButton.TabIndex = 9;
             UploadButton.Text = "Upload";
             UploadButton.UseVisualStyleBackColor = false;
@@ -238,22 +240,31 @@
             SetOutputToInput.UseVisualStyleBackColor = true;
             SetOutputToInput.Click += SetOutputToInput_Click;
             // 
+            // InputPanel
+            // 
+            InputPanel.AutoSize = true;
+            InputPanel.Controls.Add(PDFInputLabel);
+            InputPanel.Controls.Add(UploadButton);
+            InputPanel.Location = new Point(12, 6);
+            InputPanel.Name = "InputPanel";
+            InputPanel.Size = new Size(190, 28);
+            InputPanel.TabIndex = 19;
+            // 
             // PdfInput
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(804, 461);
+            Controls.Add(InputPanel);
             Controls.Add(SetOutputToInput);
             Controls.Add(ExtractRawButton);
             Controls.Add(FilePathBox);
             Controls.Add(PreviewsContainer);
             Controls.Add(SaveButton);
             Controls.Add(FolderSelect);
-            Controls.Add(UploadButton);
             Controls.Add(ImageSwitch);
             Controls.Add(ExtractFormattedButton);
             Controls.Add(OutputLabel);
-            Controls.Add(PDFInputLabel);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(820, 500);
             Name = "PdfInput";
@@ -266,6 +277,7 @@
             ((System.ComponentModel.ISupportInitialize)PreviewsContainer).EndInit();
             PreviewsContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)ErrorProvider).EndInit();
+            InputPanel.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -288,5 +300,6 @@
         private TextBox FilePathBox;
         private Button ExtractRawButton;
         private Button SetOutputToInput;
+        private Panel InputPanel;
     }
 }
