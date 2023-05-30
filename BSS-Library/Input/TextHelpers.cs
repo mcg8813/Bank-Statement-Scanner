@@ -72,28 +72,31 @@ namespace Input
             string dateRange = TrimHyphens(containsDate);
             int endDateIndex = FindLastDateIndex(dateRange, out DateOnly endDate);
 
-            if (endDateIndex != -1)
+            if (endDateIndex == -1) return result;
+            string startDateRaw = dateRange.Remove(endDateIndex).Trim('-');
+            int startDateIndex = FindLastDateIndex(startDateRaw, out DateOnly startDate);
+
+            if (startDateIndex >= 0)
             {
-                string startDateRaw = dateRange.Remove(endDateIndex).Trim('-');
-                int startDateIndex = FindLastDateIndex(startDateRaw, out DateOnly startDate);
+                result.Add(startDate);
+                result.Add(endDate);
+            }
+            else
+            {
+                startDateRaw += "-" + endDate.Year;
+                startDateIndex = FindLastDateIndex(startDateRaw, out startDate);
                 if (startDateIndex >= 0)
                 {
+                    if (endDate.Month <= 6 && startDate.Month > 6)
+                    {
+                        startDate = startDate.AddYears(-1);
+                    }
                     result.Add(startDate);
                     result.Add(endDate);
                 }
                 else
                 {
-                    startDateRaw += "-" + endDate.Year;
-                    startDateIndex = FindLastDateIndex(startDateRaw, out startDate);
-                    if (startDateIndex >= 0)
-                    {
-                        result.Add(startDate);
-                        result.Add(endDate);
-                    }
-                    else
-                    {
-                        return result;
-                    }
+                    return result;
                 }
             }
 
@@ -124,8 +127,9 @@ namespace Input
         /// </summary>
         /// <param name="transactions">List of strings containing dates to be converted.</param>
         /// <param name="dateRange">Date range for the transactions. Used to add year.</param>
+        /// <param name="oldDateFormat"></param>
         /// <returns>List of Strings representing Transactions</returns>
-        public static List<string> ConvertDateFormat(List<string> transactions, List<DateOnly> dateRange, string oldDateFormat)
+        public static List<string> ConvertDateFormat(List<string> transactions, List<DateOnly> dateRange, string oldDateFormat) 
         {
             string startYear = dateRange[0].Year.ToString();
             string endYear = dateRange[1].Year.ToString();
@@ -136,7 +140,7 @@ namespace Input
                 {
                     string tempFormat = oldDateFormat;
                     string oldDate = transactions[i].Remove(oldDateFormat.Length).Trim();
-                    string remaining = transactions[i].Substring(oldDateFormat.Length).Trim();
+                    string remaining = transactions[i][oldDateFormat.Length..].Trim();
                     if (oldDate.Length < oldDateFormat.Length)
                     {
                         tempFormat = oldDateFormat.Remove(oldDateFormat.Length - 1);

@@ -228,13 +228,12 @@ namespace Bank_Statement_Scanner
                 ErrorProvider.SetError(SelectFolderButton, "Invalid Save Location");
             }
 
-            if (UploadFileDialog.SafeFileName == null) return;
-            string filename = UploadFileDialog.SafeFileName;
+            string? previousOutput = OutputPathBox.Text;
 
-            int dotIndex = filename.IndexOf('.');
-            string name = filename.Remove(dotIndex);
-            string outputFile = name + "Output.csv";
-            string filePath = outputFile.FullFilePath();
+            if (previousOutput == null) return;
+
+            string outputName = Path.GetFileNameWithoutExtension(previousOutput) + " Output.csv";
+            string filePath = outputName.FullFilePath();
 
             StringBuilder sb = new();
 
@@ -251,7 +250,7 @@ namespace Bank_Statement_Scanner
             File.WriteAllText(filePath, result);
             SaveButton.Enabled = false;
         }
-        
+
         /// <summary>
         /// 
         /// </summary>

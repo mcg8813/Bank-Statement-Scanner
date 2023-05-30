@@ -203,9 +203,9 @@
             OutputPathBox.ForeColor = Color.White;
             OutputPathBox.Location = new Point(5, 36);
             OutputPathBox.Name = "OutputPathBox";
+            OutputPathBox.ReadOnly = true;
             OutputPathBox.Size = new Size(382, 25);
             OutputPathBox.TabIndex = 2;
-            OutputPathBox.TextAlign = HorizontalAlignment.Right;
             // 
             // CSVTable
             // 
@@ -237,7 +237,7 @@
             // 
             ErrorProvider.ContainerControl = this;
             // 
-            // ImageInput
+            // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -249,7 +249,7 @@
             ForeColor = Color.White;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(960, 540);
-            Name = "ImageInput";
+            Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Bank Statement Scanner";
             MainSplitContainer.Panel1.ResumeLayout(false);
