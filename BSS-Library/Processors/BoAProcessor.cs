@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
+using Input;
 
 namespace BankStatementScannerLibrary.Processors
 {
@@ -35,11 +36,9 @@ namespace BankStatementScannerLibrary.Processors
         /// <param name="transactions"></param>
         /// <param name="dateRange"></param>
         /// <returns></returns>
-        public string ParseData(List<string> transactions, List<DateOnly>? dateRange = null) 
+        public string ParseData(List<string> transactions, List<DateOnly>? dateRange = null)
         {
-            StringBuilder sb = new();
-            sb.Append("Trans Date,Description,Amount\n");
-            transactions.Sort(TextProcessor.DateComparable);
+            List<string> transList = new() { "Trans Date,Description,Amount\n" };
 
             for (int i = 0; i < transactions.Count; i++)
             {
@@ -58,11 +57,12 @@ namespace BankStatementScannerLibrary.Processors
                 //Add to result.
                 if (Regex.Matches(newString, @",").Count == 2 && Regex.Matches(newString, @"$").Count > 0)
                 {
-                    sb.Append(newString + '\n');
+                    transList.Add(newString + '\n');
                 }
             }
 
-            string result = sb.ToString();
+            transList.Sort(TextProcessor.DateComparable);
+            string result = string.Join("", transList);
             return result;
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace BankStatementScannerLibrary
+﻿namespace Input
 {
     public enum Format
     {

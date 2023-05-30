@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
+using Input;
 
 namespace BankStatementScannerLibrary.Processors
 {
@@ -18,7 +19,6 @@ namespace BankStatementScannerLibrary.Processors
             string[] exceptions = { "Balance Forward", "Post Date Eff Date Transaction Description Amount New Balance" };
             List<string> transactions = TextProcessor.GetTransactionData(raw, startConditions, stopConditions, exceptions);
             // Already has date
-
             return ParseData(transactions);
         }
 
@@ -30,9 +30,7 @@ namespace BankStatementScannerLibrary.Processors
         /// <returns></returns>
         public string ParseData(List<string> transactions, List<DateOnly>? dateRange = null) 
         {
-            // Format Amount & Second Comma add Description from next line before second comma, Fix Date Add First Comma, Remove any unnecessary info, then sort by date. 
-            StringBuilder sb = new();
-            sb.Append("Trans Date,Description,Amount\n");
+            List<string> transList = new() { "Trans Date,Description,Amount\n" };
 
             for (int listIndex = 0; listIndex < transactions.Count; listIndex++)
             {
@@ -60,11 +58,12 @@ namespace BankStatementScannerLibrary.Processors
                 //Add to result.
                 if (Regex.Matches(newString, @",").Count >= 2 && Regex.Matches(newString, @"$").Count > 0)
                 {
-                    sb.Append(newString + '\n');
+                    transList.Add(newString + '\n');
                 }
             }
 
-            string result = sb.ToString();
+            transList.Sort(TextProcessor.DateComparable);
+            string result = string.Join("", transList);
             return result;
         }
     }

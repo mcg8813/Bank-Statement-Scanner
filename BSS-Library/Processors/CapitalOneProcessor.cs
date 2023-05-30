@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
-
+using Input;
 
 namespace BankStatementScannerLibrary.Processors
 {
@@ -73,9 +73,7 @@ namespace BankStatementScannerLibrary.Processors
         /// <returns>Output string.</returns>
         private static string ParseFirstFormat(List<string> transactions, List<DateOnly> dateRange)
         {
-            StringBuilder sb = new();
-            sb.Append("Date,Description,Amount\n");
-            transactions.Sort(TextProcessor.DateComparable);
+            List<string> transList = new() { "Trans Date,Description,Amount\n" };
 
             for (int i = 0; i < transactions.Count; i++)
             {
@@ -93,11 +91,12 @@ namespace BankStatementScannerLibrary.Processors
                 //Add to result.
                 if (Regex.Matches(newString, @",").Count >= 2 && Regex.Matches(newString, @"$").Count > 0)
                 {
-                    sb.Append(newString + '\n');
+                    transList.Add(newString + '\n');
                 }
             }
 
-            string result = sb.ToString();
+            transList.Sort(TextProcessor.DateComparable);
+            string result = string.Join("", transList);
             return result;
         }
 
@@ -109,9 +108,7 @@ namespace BankStatementScannerLibrary.Processors
         /// <returns>Output string.</returns>
         private static string ParseSecondFormat(List<string> transactions, List<DateOnly> dateRange) 
         {
-            StringBuilder sb = new();
-            sb.Append("Date,Description,Amount\n");
-            transactions.Sort(TextProcessor.DateComparable);
+            List<string> transList = new() { "Trans Date,Description,Amount\n" };
 
             for (int i = 0; i < transactions.Count; i++)
             {
@@ -130,11 +127,12 @@ namespace BankStatementScannerLibrary.Processors
                 //Add to result.
                 if(Regex.Matches(newString, @",").Count >= 2 && Regex.Matches(newString, @"$").Count > 0)
                 {
-                    sb.Append(newString + '\n');
+                    transList.Add(newString + '\n');
                 }
             }
 
-            string result = sb.ToString();
+            transList.Sort(TextProcessor.DateComparable);
+            string result = string.Join("", transList);
             return result;
         }
     }

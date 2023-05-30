@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Adobe.PDFServicesSDK" Version="3.3.0" />
     <PackageReference Include="PdfPig" Version="0.1.7" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
   </ItemGroup>

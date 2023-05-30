@@ -1,20 +1,27 @@
-﻿using BankStatementScannerLibrary.Processors;
+﻿using BankStatementScannerLibrary.Input;
+using BankStatementScannerLibrary.Processors;
 
-namespace BankStatementScannerLibrary.Input
+namespace BankStatementScannerLibrary.Sorter
 {
     public class Sorter
     {
         /// <summary>
         /// Instantiates the correct processor implementation.
         /// </summary>
+        /// <param name="filePath"></param>
         /// <param name="raw"></param>
         /// <returns></returns>
         /// <exception cref="FormatNotFoundException"></exception>
-        public static string GetFormat(string[] raw)
+        public static string GetFormat(string filePath, bool raw = false)
         {
+            string rawString = PdfReader.ExtractPdf(filePath);
+
+            if (raw) return rawString;
+            string[] rawArray = rawString.Split('\n');
+
             IProcessor? processor = null;
 
-            foreach (string str in raw)
+            foreach (string str in rawArray)
             {
                 if (str.Contains("Capital One"))
                 {
@@ -35,7 +42,7 @@ namespace BankStatementScannerLibrary.Input
 
             if(processor != null)
             {
-                return processor.ProcessPdfString(raw);
+                return processor.ProcessPdfString(rawArray);
             } else
             {
                 throw new FormatNotFoundException("Unable to determine format");

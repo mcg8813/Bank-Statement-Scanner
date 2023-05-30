@@ -1,8 +1,6 @@
-﻿using System.Configuration;
+﻿using System.Text;
 
-using System.Text;
-
-namespace BankStatementScannerLibrary
+namespace Input
 {
     public static class TextProcessor
     {
@@ -26,16 +24,6 @@ namespace BankStatementScannerLibrary
         };
 
         /// <summary>
-        /// Returns the full file path to the out folder.
-        /// </summary>
-        /// <param name="filename">Name of output file</param>
-        /// <returns>Full File path. Example: "C:\data\BankStatementScanner\'filename'"</returns>
-        public static string FullFilePath(this string filename)
-        {
-            return $"{ConfigurationManager.AppSettings["OutputFolder"]}\\{filename}";
-        }
-
-        /// <summary>
         /// Removes commas, newline, and carriage return from all strings in list of transactions.
         /// </summary>
         /// <param name="transactions"></param>
@@ -54,7 +42,7 @@ namespace BankStatementScannerLibrary
         /// </summary>
         /// <param name="raw">String array input from PDF text extraction.</param>
         /// <returns>List of DateOnly objects representing the range.</returns>
-        public static List<DateOnly> FindBillingDate(string[] raw, string key) 
+        public static List<DateOnly> FindBillingDate(string[] raw, string key)
         {
             List<DateOnly> result = new();
 
@@ -67,7 +55,7 @@ namespace BankStatementScannerLibrary
                 {
                     if (GetMonth(raw[i]) > 0)
                     {
-                        containsDate = raw[i].Replace(key, "").Replace('.', '-').Replace(',', '-').Replace(' ', '-').Replace('!','-');
+                        containsDate = raw[i].Replace(key, "").Replace('.', '-').Replace(',', '-').Replace(' ', '-').Replace('!', '-');
                         break;
                     }
                     else if (GetMonth(raw[i + 1]) > 0)
@@ -117,7 +105,7 @@ namespace BankStatementScannerLibrary
         /// Returns the int value of matching month or 0 if the string doesn't
         /// start with a valid month.
         /// </summary>
-        /// <param name="str">String containg Month.</param>
+        /// <param name="str">String containing Month.</param>
         /// <returns>Int value of Month found in String. 0 if none are found.</returns>
         private static int GetMonth(string str)
         {
@@ -137,10 +125,10 @@ namespace BankStatementScannerLibrary
         /// <param name="transactions">List of strings containing dates to be converted.</param>
         /// <param name="dateRange">Date range for the transactions. Used to add year.</param>
         /// <returns>List of Strings representing Transactions</returns>
-        public static List<string> ConvertDateFormat(List<string> transactions, List<DateOnly> dateRange, string oldDateFormat) 
+        public static List<string> ConvertDateFormat(List<string> transactions, List<DateOnly> dateRange, string oldDateFormat)
         {
-            string startyear = dateRange[0].Year.ToString();
-            string endyear = dateRange[1].Year.ToString();
+            string startYear = dateRange[0].Year.ToString();
+            string endYear = dateRange[1].Year.ToString();
 
             for (int i = 0; i < transactions.Count; i++)
             {
@@ -148,10 +136,10 @@ namespace BankStatementScannerLibrary
                 {
                     string tempFormat = oldDateFormat;
                     string oldDate = transactions[i].Remove(oldDateFormat.Length).Trim();
-                    string remaining = transactions[i].Substring(oldDateFormat.Length).Trim(); 
+                    string remaining = transactions[i].Substring(oldDateFormat.Length).Trim();
                     if (oldDate.Length < oldDateFormat.Length)
                     {
-                        tempFormat = oldDateFormat.Remove(oldDateFormat.Length - 1); 
+                        tempFormat = oldDateFormat.Remove(oldDateFormat.Length - 1);
                     }
 
                     StringBuilder newStringSb = new();
@@ -160,19 +148,19 @@ namespace BankStatementScannerLibrary
                     {
                         newStringSb.Append(transDate.ToString("MM/dd/")); // Add start of date.  
 
-                        if (startyear.Equals(endyear)) // If start date and new date have same year.
+                        if (startYear.Equals(endYear)) // If start date and new date have same year.
                         {
-                            newStringSb.Append(startyear + ","); // Add year 
+                            newStringSb.Append(startYear + ","); // Add year 
                         }
                         else // Not same year
                         {
                             if (dateRange[0].Month <= transDate.Month && transDate.Month <= 12) // If trans month is within start month and the end of the year.
                             {
-                                newStringSb.Append(startyear + ",");
+                                newStringSb.Append(startYear + ",");
                             }
                             else
                             {
-                                newStringSb.Append(endyear + ",");
+                                newStringSb.Append(endYear + ",");
                             }
                         }
                         transactions[i] = newStringSb.Append(remaining).ToString();
@@ -207,7 +195,8 @@ namespace BankStatementScannerLibrary
                 if (chars[i] != '-') // Problem with hyphen at end of string
                 {
                     dateRangeSb.Append(chars[i]);
-                } else
+                }
+                else
                 {
                     dateRangeSb.Append('-');
                     while (chars[i + 1] == '-')
@@ -230,14 +219,14 @@ namespace BankStatementScannerLibrary
         private static int FindLastDateIndex(string dateRange, out DateOnly endDate)
         {
             int startIndex = dateRange.Length - 11;
-            if(startIndex < 0)
+            if (startIndex < 0)
             {
                 return -1;
             }
 
             for (int i = startIndex; i >= 0; i--)
             {
-                string temp = dateRange.Substring(i);
+                string temp = dateRange[i..];
                 if (DateOnly.TryParseExact(temp, "MMMM-dd-yyyy", out endDate) || DateOnly.TryParseExact(temp, "MMM-dd-yyyy", out endDate))
                 {
                     return i;
@@ -257,7 +246,7 @@ namespace BankStatementScannerLibrary
             StringBuilder resultSb = new();
             for (int i = str.Length - 1; i > 1; i--)
             {
-                if (48 <= (int)str[i] && (int)str[i] <= 57) // If number
+                if (48 <= str[i] && str[i] <= 57) // If number
                 {
                     if (str[i - 1].Equals('-')) // Minus sign next char
                     {
@@ -308,7 +297,7 @@ namespace BankStatementScannerLibrary
         /// </summary>
         /// <param name="Transactions">List of transaction strings.</param>
         /// <returns>Sorted list of strings by date at start of each string.</returns>
-        public static int DateComparable(string str1, string str2) 
+        public static int DateComparable(string str1, string str2)
         {
             if (str1.Length < 10 || !DateOnly.TryParse(str1.Remove(10), out DateOnly str1date)) str1date = DateOnly.MinValue;
             if (str2.Length < 10 || !DateOnly.TryParse(str2.Remove(10), out DateOnly str2date)) str2date = DateOnly.MinValue;
@@ -316,7 +305,8 @@ namespace BankStatementScannerLibrary
             if (str1date.Equals(str2date) && str1.Length > 9 && str2.Length > 9)
             {
                 return str1[9..].CompareTo(str2[9..]);
-            } else if (str1date.Equals(str2date))
+            }
+            else if (str1date.Equals(str2date))
             {
                 return 0;
             }
@@ -326,13 +316,15 @@ namespace BankStatementScannerLibrary
                 if (str1date.Month == str2date.Month)
                 {
                     return str1date.Day.CompareTo(str2date.Day);
-                } else
+                }
+                else
                 {
                     return str1date.Month.CompareTo(str2date.Month);
                 }
-            } else
+            }
+            else
             {
-                return str1date.Year.CompareTo(str2date.Year); 
+                return str1date.Year.CompareTo(str2date.Year);
             }
         }
 
@@ -366,7 +358,7 @@ namespace BankStatementScannerLibrary
         /// <param name="stoppingConditions">String indicating when to stop capturing</param>
         /// <param name="exclusions">Strings to be excluded during the capture</param>
         /// <returns></returns>
-        public static List<string> GetTransactionData(string[] raw, string[] startingConditions, string[] stoppingConditions, params string[] exclusions) 
+        public static List<string> GetTransactionData(string[] raw, string[] startingConditions, string[] stoppingConditions, params string[] exclusions)
         {
             List<string> transactionData = new();
             bool capturing = false;
@@ -416,23 +408,26 @@ namespace BankStatementScannerLibrary
             char[] chars = str.ToCharArray();
             int maxIndex = str.Length - 1;
             int count = 1;
-            
+
             int current;
-            if (!decreasing) 
+            if (!decreasing)
             {
                 if (startIndex != maxIndex)
                 {
                     current = startIndex + 1;
-                } else
+                }
+                else
                 {
                     return str.Remove(startIndex, 1);
                 }
-            } else
+            }
+            else
             {
-                if(startIndex != 0)
+                if (startIndex != 0)
                 {
                     current = startIndex - 1;
-                } else
+                }
+                else
                 {
                     return str.Remove(startIndex, 1);
                 }
@@ -450,17 +445,18 @@ namespace BankStatementScannerLibrary
                     break;
                 }
 
-                count++; 
-                if(!decreasing)
+                count++;
+                if (!decreasing)
                 {
                     current++;
-                } else
+                }
+                else
                 {
                     current--;
                 }
             }
 
-            if (deleteSpace && (count + current) <= maxIndex && current > 0)
+            if (deleteSpace && count + current <= maxIndex && current > 0)
             {
                 count++;
                 current--;
