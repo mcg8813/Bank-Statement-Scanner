@@ -20,10 +20,7 @@ BSS should update automatically given you're connected to the internet. If an up
 
 1. Select Upload file (Only PDF files are supported).
 2. (Optional) Change output folder. 
-   - `Set to Input` will change the output directory to the same one as the current uploaded PDF.
-   - `Select Folder` will bring up the folder browser dialog. 
-
-*The output path will be shown in the buttom right of the window, to the left of the save button. Default path is `C:\Users\<User>\AppData\Local\BankStatementScanner\app-<Version>\Outputs` but isn't functional.* 
-
-3. Select `Extract Formatted`. This will start the process of formatting the PDF to csv. If successful it will populate the table on the right.
+   - `Set to Input` will change the output directory to the same one as the current uploaded PDF. *This is the default*. 
+   - `Select Folder` will bring up the folder browser dialog.  
+3. `Convert` will start the process of formatting the PDF to csv. If successful it will populate the table on the right.
 4. (Optional) You can modify the table but it will not save automatically. Make sure to press the `Save` button after you modify the table.
